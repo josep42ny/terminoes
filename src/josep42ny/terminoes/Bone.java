@@ -17,4 +17,15 @@ public class Bone {
     public int getRightValue() {
         return rg;
     }
+
+    public int getValue(int index) throws IndexOutOfBoundsException {
+        if (index == 0) {
+            return lf;
+        } else if (index == 1) {
+            return rg;
+        } else {
+            throw new IndexOutOfBoundsException();
+        }
+    }
+
 }

@@ -2,8 +2,15 @@ package josep42ny.terminoes;
 
 public class GameController {
 
+    View view;
+
+    public GameController() {
+        this.view = new View();
+    }
+
     public void awake() {
-        new BoneList();
+        BoneList boneyard = new BoneList();
+        view.drawHand(boneyard);
     }
 
 }

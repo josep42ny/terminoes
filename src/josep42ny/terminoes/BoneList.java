@@ -37,4 +37,12 @@ public class BoneList {
         return out;
     }
 
+    public int size() {
+        return bones.size();
+    }
+
+    public Bone get(int index) {
+        return bones.get(index);
+    }
+
 }
