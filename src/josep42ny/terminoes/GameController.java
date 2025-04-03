@@ -10,7 +10,9 @@ public class GameController {
 
     public void awake() {
         BoneList boneyard = new BoneList();
-        view.drawHand(boneyard);
+        for (int i = 0; i < 4; i++) {
+            view.drawHand(boneyard.takeRandomBones(7));
+        }
     }
 
 }

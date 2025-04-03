@@ -27,14 +27,14 @@ public class BoneList {
         return bones.toArray(new Bone[0]);
     }
 
-    public Bone[] takeRandomBones(int amount) {
+    public BoneList takeRandomBones(int amount) {
         Bone[] out = new Bone[amount];
 
         for (int i = 0; i < amount; i++) {
             out[i] = bones.remove(random.nextInt(bones.size()));
         }
 
-        return out;
+        return new BoneList(out);
     }
 
     public int size() {
