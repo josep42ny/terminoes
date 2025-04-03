@@ -1,2 +1,9 @@
 # terminoes
 A simple terminal-based Dominoes game
+
+| Característiques mínimes per superar la part pràctica:                                                                                                                                                                                                                                        | Puntuació        |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------|
+| Estil de programació orientat a objectes ( Herència, composició, polimorfisme, excepcions, patterns estudiats al mòdul formatiu, principis SOLID, etc )                                                                                                                                       | Fins a 6,5 punts |
+| Utilització de collections de forma eficient.                                                                                                                                                                                                                                                 | Fins a 1,5 punts |
+| Implementació de persistència emprant fitxers. L’aplicatiu ha de poder guardar les partides entre diferents jugadors finalitzades i no-finalitzades. En el cas en que la partida no estigui finalitzada l’aplicatiu ha de ser capaç de continuar la partida en el punt en que es va suspendre | Fins a 2 punts   |
+| Nota: és necessari superar el 50% de puntuació a cada una de les característiques descrites en aquesta taula.                                                                                                                                                                                 |                  |
