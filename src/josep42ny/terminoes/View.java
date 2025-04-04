@@ -7,11 +7,11 @@ public class View {
      *
      * @param boneList A list containing the bones to be printed.
      */
-    public void drawHand(BoneList boneList) {
+    /*public void drawHand(BoneList boneList) {
         int listSize = boneList.size();
 
         for (int a = 0; a < listSize; a++) {
-            System.out.print("\033[;97;1m" + "▗" + "\033[0m" + "\033[97;1m" + "▄▄▄" + "\033[0m" + "\033[;97;1m" + "▖" + "\033[0m" + " ");
+            System.out.print("\033[;97;1m" + "▗▄▄▄▖" + "\033[0m" + " ");
         }
         System.out.println();
         for (int i = 0; i < listSize; i++) {
@@ -19,17 +19,25 @@ public class View {
         }
         System.out.println();
         for (int a = 0; a < listSize; a++) {
-            System.out.print("\033[97;1m" + "▐" + "\033[0m" + "\033[107;30;1m" + "───" + "\033[0m" + "\033[105;97;1m" + "▌" + "\033[0m" + " ");
+            System.out.print("\033[97;1m" + "▐───" + "\033[0m" + "\033[105;97;1m" + "▌" + "\033[0m" + " ");
         }
         System.out.println();
         for (int i = 0; i < listSize; i++) {
-            System.out.print("\033[97;1m" + "▐" + "\033[0m" + "\033[107;30;1m" + " " + boneList.get(i).getValue(1) + " " + "\033[0m" + "\033[105;97;1m" + "▌" + "\033[0m" + " ");
+            System.out.print("\033[97;1m" + "▐ " + boneList.get(i).getValue(1) + " " + "\033[0m" + "\033[105;97;1m" + "▌" + "\033[0m" + " ");
         }
         System.out.println();
         for (int a = 0; a < listSize; a++) {
-            System.out.print("\033[;97;1m" + "▝" + "\033[0m" + "\033[97;105;1m" + "▀▀▀" + "\033[0m" + "\033[105;97;1m" + "▘" + "\033[0m" + " ");
+            System.out.print("\033[97;1m" + "▝" + "\033[0m" + "\033[97;105;1m" + "▀▀▀▘" + "\033[0m" + " ");
         }
         System.out.println();
+    }*/
+    public void drawHand(BoneList boneList) {
+        for (int i = 0; i < boneList.get(i).getVisualHeight(); i++) {
+            for (int j = 0; j < boneList.size(); j++) {
+                System.out.print(boneList.get(j).getPart(i) + " ");
+            }
+            System.out.println();
+        }
     }
 
 }
