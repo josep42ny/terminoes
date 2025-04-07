@@ -14,7 +14,7 @@ public class BoneList {
         int MAX_BONE_VALUE = 6;
         for (int lf = 0; lf <= MAX_BONE_VALUE; lf++) {
             for (int rg = 0; rg <= lf; rg++) {
-                bones.add(new Bone(lf, rg, new int[]{1, 0}));
+                bones.add(new Bone(lf, rg, Direction.UP));
             }
         }
     }

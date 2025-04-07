@@ -6,26 +6,12 @@ public class Bone {
 
     private int lf;
     private int rg;
-    private int[] direction;
-    private final String[] visualHorizontal;
-    private final String[] visualVertical;
+    private Direction direction;
 
-    public Bone(int lf, int rg, int[] direction) {
+    public Bone(int lf, int rg, Direction direction) {
         this.lf = lf;
         this.rg = rg;
         this.direction = direction;
-        visualHorizontal = new String[]{
-                "\033[97;1m" + "▗▄▄▄▄▄▄▄▖" + "\033[0m",
-                "\033[97;1m" + "▐" + "\033[107;30;1m" + " " + this.lf + " │ " + this.rg + " " + "\033[0m" + "\033[105;97;1m" + "▌" + "\033[0m",
-                "\033[97;1m" + "▝" + "\033[0m" + "\033[97;105;1m" + "▀▀▀▀▀▀▀▘" + "\033[0m"
-        };
-        visualVertical = new String[]{
-                "\033[97;1m" + "▗▄▄▄▖" + "\033[0m",
-                "\033[97;1m" + "▐" + "\033[107;30;1m" + " " + this.lf + " " + "\033[0m" + "\033[105;97;1m" + "▌" + "\033[0m",
-                "\033[97;1m" + "▐" + "\033[107;30;1m" + "───" + "\033[0m" + "\033[105;97;1m" + "▌" + "\033[0m",
-                "\033[97;1m" + "▐" + "\033[107;30;1m" + " " + this.rg + " " + "\033[0m" + "\033[105;97;1m" + "▌" + "\033[0m",
-                "\033[97;1m" + "▝" + "\033[0m" + "\033[97;105;1m" + "▀▀▀▘" + "\033[0m"
-        };
     }
 
     public int getLeftValue() {
@@ -47,19 +33,33 @@ public class Bone {
     }
 
     public String getPart(int index) {
-        if (Arrays.equals(direction, new int[]{1, 0})) {
-            return visualHorizontal[index];
-        } else {
-            return visualVertical[index];
+        String out;
+        switch (direction) {
+            case UP -> out = vParts(lf, rg)[index];
+            case RG -> out = hParts(lf, rg)[index];
+            case DW -> out = vParts(rg, lf)[index];
+            case LF -> out = hParts(rg, lf)[index];
+            default -> out = "";
         }
+        return out;
     }
 
-    public int getVisualSize() {
-        if (Arrays.equals(direction, new int[]{1, 0})) {
-            return visualHorizontal.length;
-        } else {
-            return visualVertical.length;
-        }
+    private String[] hParts(int first, int last) {
+        return new String[]{
+                "\033[97;1m" + "▗▄▄▄▄▄▄▄▖" + "\033[0m",
+                "\033[97;1m" + "▐" + "\033[107;30;1m" + " " + first + " │ " + last + " " + "\033[0m" + "\033[105;97;1m" + "▌" + "\033[0m",
+                "\033[97;1m" + "▝" + "\033[0m" + "\033[97;105;1m" + "▀▀▀▀▀▀▀▘" + "\033[0m"
+        };
+    }
+
+    private String[] vParts(int first, int last) {
+        return new String[]{
+                "\033[97;1m" + "▗▄▄▄▖" + "\033[0m",
+                "\033[97;1m" + "▐" + "\033[107;30;1m" + " " + first + " " + "\033[0m" + "\033[105;97;1m" + "▌" + "\033[0m",
+                "\033[97;1m" + "▐" + "\033[107;30;1m" + "───" + "\033[0m" + "\033[105;97;1m" + "▌" + "\033[0m",
+                "\033[97;1m" + "▐" + "\033[107;30;1m" + " " + last + " " + "\033[0m" + "\033[105;97;1m" + "▌" + "\033[0m",
+                "\033[97;1m" + "▝" + "\033[0m" + "\033[97;105;1m" + "▀▀▀▘" + "\033[0m"
+        };
     }
 
 }
