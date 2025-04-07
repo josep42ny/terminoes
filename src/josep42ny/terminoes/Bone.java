@@ -1,7 +1,5 @@
 package josep42ny.terminoes;
 
-import java.util.Arrays;
-
 public class Bone {
 
     private int lf;
@@ -22,24 +20,14 @@ public class Bone {
         return rg;
     }
 
-    public int getValue(int index) throws IndexOutOfBoundsException {
-        if (index == 0) {
-            return lf;
-        } else if (index == 1) {
-            return rg;
-        } else {
-            throw new IndexOutOfBoundsException();
-        }
-    }
-
-    public String getPart(int index) {
-        String out;
+    public String[] getParts() {
+        String[] out;
         switch (direction) {
-            case UP -> out = vParts(lf, rg)[index];
-            case RG -> out = hParts(lf, rg)[index];
-            case DW -> out = vParts(rg, lf)[index];
-            case LF -> out = hParts(rg, lf)[index];
-            default -> out = "";
+            case UP -> out = vParts(lf, rg);
+            case RG -> out = hParts(lf, rg);
+            case DW -> out = vParts(rg, lf);
+            case LF -> out = hParts(rg, lf);
+            default -> out = new String[]{};
         }
         return out;
     }

@@ -8,9 +8,9 @@ public class View {
      * @param boneList A list containing the bones to be printed.
      */
     public void drawHand(BoneList boneList) {
-        for (int i = 0; i < boneList.get(i).getVisualSize(); i++) {
-            for (int j = 0; j < boneList.size(); j++) {
-                System.out.print(boneList.get(j).getPart(i) + " ");
+        for (int i = 0; i < boneList.get(0).getParts().length; i++) {
+            for (Bone bone : boneList.getAllBones()) {
+                System.out.print(bone.getParts()[i] + " ");
             }
             System.out.println();
         }
