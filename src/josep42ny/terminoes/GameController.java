@@ -3,7 +3,7 @@ package josep42ny.terminoes;
 public class GameController {
 
     public void awake() {
-        Game game = new GameMexican();
+        Game game = new GameMexican(2, 2);
         game.playRound();
     }
 
