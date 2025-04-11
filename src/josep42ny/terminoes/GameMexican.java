@@ -36,16 +36,8 @@ public class GameMexican extends Game {
         leftEnd.add(new Bone(6, 6, Direction.UP));
         view.drawHand(leftEnd.getAllBones());
 
-        for (int i = 0; i < test.size(); i++) {
-            if (leftEnd.get(0).getLeftValue() == test.get(i).getLeftValue()) {
-                leftEnd.add(test.take(i));
-                break;
-            }
-        }
-
-        view.drawHand(test.getAllBones());
-
-        view.drawHand(leftEnd.getAllBones());
+        for (int val : test.getPlayableIndexes(leftEnd.get(0).getLeftValue()))
+            System.out.println(val);
 
     }
 

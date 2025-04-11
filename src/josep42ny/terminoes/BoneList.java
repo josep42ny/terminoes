@@ -21,7 +21,7 @@ public class BoneList {
         int MAX_BONE_VALUE = 6;
         for (int lf = 0; lf <= MAX_BONE_VALUE; lf++) {
             for (int rg = 0; rg <= lf; rg++) {
-                bones.add(new Bone(lf, rg, Direction.UP));
+                bones.add(new Bone(lf, rg, Direction.RG));
             }
         }
     }
@@ -54,6 +54,19 @@ public class BoneList {
 
     public void add(Bone bone) {
         bones.add(bone);
+    }
+
+    public int[] getPlayableIndexes(int target) {
+        List<Integer> out = new ArrayList<>();
+        int count = 0;
+
+        for (int i = 0; i < bones.size(); i++) {
+            if (bones.get(i).getLeftValue() == target || bones.get(i).getRightValue() == target) {
+                out.add(i);
+            }
+        }
+
+        return out.stream().mapToInt(i -> i).toArray();
     }
 
 }
