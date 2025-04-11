@@ -9,7 +9,7 @@ public class View {
      */
     public void drawHand(BoneList bones) {
         for (int i = 0; i < bones.get(0).getParts().length; i++) {
-            for (Bone bone : bones.getAllBones()) {
+            for (Bone bone : bones.toArray()) {
                 System.out.print(bone.getParts()[i] + " ");
             }
             System.out.println();

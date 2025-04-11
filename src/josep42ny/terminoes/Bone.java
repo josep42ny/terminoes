@@ -16,11 +16,11 @@ public class Bone {
         this(lf, rg, Direction.UP);
     }
 
-    public int getLeftValue() {
+    public int getLf() {
         return lf;
     }
 
-    public int getRightValue() {
+    public int getRg() {
         return rg;
     }
 

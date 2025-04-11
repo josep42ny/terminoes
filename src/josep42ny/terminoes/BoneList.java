@@ -26,7 +26,7 @@ public class BoneList {
         }
     }
 
-    public Bone[] getAllBones() {
+    public Bone[] toArray() {
         return bones.toArray(new Bone[0]);
     }
 
@@ -53,7 +53,7 @@ public class BoneList {
     }
 
     public Bone get(int index) {
-        return bones.get(index);
+        return index >= 0 ? bones.get(index) : bones.get(bones.size() + index);
     }
 
     public void add(Bone bone) {
@@ -65,12 +65,32 @@ public class BoneList {
         int count = 0;
 
         for (int i = 0; i < bones.size(); i++) {
-            if (bones.get(i).getLeftValue() == target || bones.get(i).getRightValue() == target) {
+            if (bones.get(i).getLf() == target || bones.get(i).getRg() == target) {
                 out.add(i);
             }
         }
 
         return out.stream().mapToInt(i -> i).toArray();
+    }
+
+    public boolean hasBone(int lfValue, int rgValue) {
+        for (Bone bone : bones) {
+            if (bone.getLf() == lfValue || bone.getRg() == rgValue) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Bone takeBoneByValue(int lfValue, int rgValue) {
+        int match = 0;
+        for (int i = 0; i < bones.size(); i++) {
+            Bone bone = bones.get(i);
+            if (bone.getLf() == lfValue && bone.getRg() == rgValue) {
+                match = 0;
+            }
+        }
+        return bones.remove(match);
     }
 
 }
