@@ -18,10 +18,10 @@ public class BoneList {
     }
 
     public void fill() {
-        int MAX_BONE_VALUE = 6;
+        final int MAX_BONE_VALUE = 6;
         for (int lf = 0; lf <= MAX_BONE_VALUE; lf++) {
             for (int rg = 0; rg <= lf; rg++) {
-                bones.add(new Bone(lf, rg, Direction.RG));
+                bones.add(new Bone(lf, rg));
             }
         }
     }
@@ -34,11 +34,15 @@ public class BoneList {
         return bones.remove(index);
     }
 
-    public Bone[] takeRandomBones(int amount) {
-        Bone[] out = new Bone[amount];
+    public BoneList takeRandom(int amount) throws OutOfBones {
+        if (bones.isEmpty()) {
+            throw new OutOfBones("tried getting bones from an empty list");
+        }
+
+        BoneList out = new BoneList();
 
         for (int i = 0; i < amount; i++) {
-            out[i] = bones.remove(random.nextInt(bones.size()));
+            out.add(this.take(random.nextInt(this.size())));
         }
 
         return out;

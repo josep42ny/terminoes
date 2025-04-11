@@ -9,36 +9,42 @@ public class GameMexican extends Game {
     BoneList rightEnd;
 
     public GameMexican(int players, int teams) {
-        final int PIECE_NUMBER = 28;
-        this.view = new View();
-        this.boneyard = new BoneList();
-        this.boneyard.fill();
-        this.leftEnd = new BoneList();
-        this.rightEnd = new BoneList();
-        this.teams = new BoneList[teams][players];
-
-        for (int i = 0; i < teams; i++) {
-            for (int j = 0; j < players; j++) {
-                this.teams[i][j] = new BoneList(this.boneyard.takeRandomBones(PIECE_NUMBER / teams / players));
-            }
-        }
+        super(teams, players);
+//        final int PIECE_NUMBER = 28;
+//        this.view = new View();
+//        this.boneyard = new BoneList();
+//        this.boneyard.fill();
+//        this.leftEnd = new BoneList();
+//        this.rightEnd = new BoneList();
+//        this.teams = new BoneList[teams][players];
+//
+//        for (int i = 0; i < teams; i++) {
+//            for (int j = 0; j < players; j++) {
+//                this.teams[i][j] = new BoneList(this.boneyard.takeRandom(PIECE_NUMBER / teams / players));
+//            }
+//        }
     }
 
     public GameMexican(int players) {
         this(1, players);
     }
 
-    @Override
-    public void playRound() {
-        BoneList test = teams[0][0];
-        view.drawHand(test.getAllBones());
+    //Prep
+    //Bone centerBone = chooseCenterBone();
 
-        leftEnd.add(new Bone(6, 6, Direction.UP));
-        view.drawHand(leftEnd.getAllBones());
+    //loop:teams
+    //loop:players in team
+    //if player hand can place bone
+    //append bone to corresponding side
+    //else
+    //try: get bone from pile
+    //catch: continue to next player
+    //end loop
+    //end loop
 
-        for (int val : test.getPlayableIndexes(leftEnd.get(0).getLeftValue()))
-            System.out.println(val);
 
-    }
+//    private boolean roundEnded() {
+//
+//    }
 
 }
