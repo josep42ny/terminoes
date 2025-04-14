@@ -4,6 +4,7 @@ import java.util.Random;
 
 public abstract class Game {
 
+    private InputHandler inputHandler;
     protected Random random;
     protected final Player[] players;
     protected BoneList boneyard;
@@ -11,6 +12,7 @@ public abstract class Game {
     protected BoneList rgList;
 
     protected Game(int teamAmount, int playersInTeam) {
+        inputHandler = new InputHandler();
         this.random = new Random();
         this.lfList = new BoneList();
         this.rgList = new BoneList();
@@ -31,6 +33,8 @@ public abstract class Game {
     }
 
     public final void playRound() {
+        inputHandler.askPiece(new int[]{1, 2});
+
         Bone firstBone = takeFirstBone();
         this.lfList.add(firstBone);
         this.rgList.add(firstBone);
