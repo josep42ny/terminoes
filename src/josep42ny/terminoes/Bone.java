@@ -1,4 +1,6 @@
 package josep42ny.terminoes;
+import org.fusesource.jansi.AnsiConsole;
+AnsiConsole.systemInstall();
 
 public class Bone {
 
@@ -13,7 +15,7 @@ public class Bone {
     }
 
     public Bone(int lf, int rg) {
-        this(lf, rg, Direction.UP);
+        this(lf, rg, Direction.RG);
     }
 
     public int getLf() {
@@ -36,11 +38,15 @@ public class Bone {
         return out;
     }
 
+    Ansi ansi = new Ansi();
+
     private String[] hParts(int first, int last) {
         return new String[]{
                 "         ",
-                "\033[97;1m" + "▗▄▄▄▄▄▄▄▖" + "\033[0m",
-                "\033[97;1m" + "▐" + "\033[30;107;1m" + " " + first + " │ " + last + " " + "\033[0m" + "\033[97;1m" + "▌" + "\033[0m",
+                //"\033[97;1m" + "▗▄▄▄▄▄▄▄▖" + "\033[0m",
+                ansi.draw().p(Color.FG_WHITE).a("▗▄▄▄▄▄▄▄▖").end(),
+                //"\033[97;1m" + "▐" + "\033[30;107;1m" + " " + first + " │ " + last + " " + "\033[0m" + "\033[97;1m" + "▌" + "\033[0m",
+                ansi.draw().p(Color.FG_WHITE).a("▐").p(Color.BG_WHITE).p(Color.BG_BLACK).a(" " + first + " │ " + last + " ").p(Color.FG_WHITE).a("▌").end(),
                 "\033[97;1m" + "▝" + "▀▀▀▀▀▀▀▘" + "\033[0m",
                 "         "
         };
