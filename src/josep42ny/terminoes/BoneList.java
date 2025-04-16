@@ -60,13 +60,15 @@ public class BoneList {
         bones.add(bone);
     }
 
-    public int[] getPlayableIndexes(int target) {
+    public int[] getPlayableIndexes(int[] targets) {
         List<Integer> out = new ArrayList<>();
         int count = 0;
 
         for (int i = 0; i < bones.size(); i++) {
-            if (bones.get(i).getLf() == target || bones.get(i).getRg() == target) {
-                out.add(i);
+            for (int target : targets) {
+                if (bones.get(i).getLf() == target || bones.get(i).getRg() == target) {
+                    out.add(i);
+                }
             }
         }
 
@@ -75,7 +77,7 @@ public class BoneList {
 
     public boolean hasBone(int lfValue, int rgValue) {
         for (Bone bone : bones) {
-            if (bone.getLf() == lfValue || bone.getRg() == rgValue) {
+            if (bone.getLf() == lfValue && bone.getRg() == rgValue) {
                 return true;
             }
         }
@@ -87,10 +89,16 @@ public class BoneList {
         for (int i = 0; i < bones.size(); i++) {
             Bone bone = bones.get(i);
             if (bone.getLf() == lfValue && bone.getRg() == rgValue) {
-                match = 0;
+                match = i;
             }
         }
         return bones.remove(match);
+    }
+
+    public void highlight(int[] indexes) {
+        for (int index : indexes) {
+            bones.get(index).highlight();
+        }
     }
 
 }

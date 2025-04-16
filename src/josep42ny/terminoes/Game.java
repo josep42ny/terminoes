@@ -5,17 +5,17 @@ import java.util.Random;
 public abstract class Game {
 
     private InputHandler inputHandler;
+    private View view;
     protected Random random;
     protected final Player[] players;
     protected BoneList boneyard;
-    protected BoneList lfList;
-    protected BoneList rgList;
+    protected Board board;
 
     protected Game(int teamAmount, int playersInTeam) {
-        inputHandler = new InputHandler();
+        this.inputHandler = new InputHandler();
+        this.view = new View();
         this.random = new Random();
-        this.lfList = new BoneList();
-        this.rgList = new BoneList();
+        this.board = new Board();
         this.boneyard = new BoneList();
         this.boneyard.fill();
         this.players = new Player[teamAmount * playersInTeam];
@@ -33,21 +33,20 @@ public abstract class Game {
     }
 
     public final void playRound() {
-        inputHandler.askPiece(new int[]{1, 2});
-
-        Bone firstBone = takeFirstBone();
-        this.lfList.add(firstBone);
-        this.rgList.add(firstBone);
+        board.setCenter(takeFirstBone());
 
         while (true) {
             for (Player player : players) {
-                new View().drawHand(player.getHand());
-                int lf = lfList.get(-1).getLf();
-                int rg = rgList.get(-1).getRg();
-                System.out.println(player.getHand().getPlayableIndexes(lf));
-                System.out.println(player.getHand().getPlayableIndexes(rg));
+                BoneList hand = player.getHand();
+
+                int[] test = hand.getPlayableIndexes(board.getEnds());
+                hand.highlight(test);
+
+                view.drawBoard(board);
+                view.drawHand(hand);
+
+                inputHandler.askPiece(test);
             }
-            break;
         }
     }
 
@@ -55,14 +54,14 @@ public abstract class Game {
     private final Bone takeFirstBone() {
         //spanish style
         int MAX_DOUBLE = 6;
-        for (int i = 0; i < MAX_DOUBLE; i++) {
+        for (int i = MAX_DOUBLE; i >= 0; i--) {
             for (Player player : players) {
                 if (player.getHand().hasBone(i, i)) {
                     return player.getHand().takeBoneByValue(i, i);
                 }
             }
         }
-        return players[random.nextInt(players.length)].getHand().takeRandom(1).get(0);
+        return players[random.nextInt(players.length)].getHand().takeRandom(1).take(0);
     }
 
 }

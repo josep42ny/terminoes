@@ -7,12 +7,14 @@ public class Bone {
     private int lf;
     private int rg;
     private Direction direction;
+    private boolean highlighted;
 
     public Bone(int lf, int rg, Direction direction) {
         this.ansi = new Ansi();
         this.lf = lf;
         this.rg = rg;
         this.direction = direction;
+        this.highlighted = false;
     }
 
     public Bone(int lf, int rg) {
@@ -30,13 +32,23 @@ public class Bone {
     public String[] getParts() {
         String[] out;
         switch (direction) {
-            case UP -> out = vPartsHiglighted(lf, rg);
-            case RG -> out = hPartsHiglighted(lf, rg);
-            case DW -> out = vParts(rg, lf);
-            case LF -> out = hParts(rg, lf);
+            case UP,DW -> out = isHighlighted() ? vPartsHiglighted(lf, rg) : vParts(rg, lf);
+            case LF,RG -> out = isHighlighted() ? hPartsHiglighted(lf, rg) : hParts(rg, lf);
             default -> out = new String[]{};
         }
         return out;
+    }
+
+    public boolean isHighlighted() {
+        return highlighted;
+    }
+
+    public void highlight() {
+        this.highlighted = true;
+    }
+
+    public void unHighlight() {
+        this.highlighted = false;
     }
 
     private String[] hParts(int first, int last) {
