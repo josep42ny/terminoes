@@ -7,28 +7,35 @@ import java.util.Scanner;
 
 public class InputHandler {
 
-    Scanner scanner;
-
-    public InputHandler() {
-        this.scanner = new Scanner(System.in);
-    }
-
     public int askPiece(int[] constraints) {
-        int out;
+        String in;
+
         while (true) {
-            try {
-                out = Integer.parseInt(scanner.next());
-            } catch (NumberFormatException nfe) {
+            in = System.console().readLine("Selecciona una peça: ");
+
+            if (in.isEmpty()) {
+                Ansi.clearPreviousLine();
                 continue;
             }
 
-            for (int constraint : constraints) {
-                if (constraint == out) {
-                    return out;
-                }
+            try {
+                return parseConstrainedInt(constraints, in);
+            } catch (NumberFormatException nfe) {
+                Ansi.clearPreviousLine();
             }
-            // todo delete previous lines
+
         }
+    }
+
+    private int parseConstrainedInt(int[] constraints, String in) throws NumberFormatException {
+        int out = Integer.parseInt(in);
+
+        for (int constraint : constraints) {
+            if (constraint == out) {
+                return out;
+            }
+        }
+        throw new NumberFormatException("int does not fit constraints");
     }
 
 }

@@ -23,4 +23,11 @@ public class Ansi {
         string = "";
         return out;
     }
+
+    public static void clearPreviousLine() {
+        System.out.print("\033[F");
+        System.out.print("\033[2K");
+        System.out.flush();
+    }
+
 }
