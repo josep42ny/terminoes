@@ -37,15 +37,35 @@ public abstract class Game {
 
         while (true) {
             for (Player player : players) {
+                Ansi.clearScreen();
                 BoneList hand = player.getHand();
 
+                //
                 int[] test = hand.getPlayableIndexes(board.getEnds());
                 hand.highlight(test);
 
                 view.drawBoard(board);
                 view.drawHand(hand);
 
-                inputHandler.askPiece(test);
+                int handIndex = inputHandler.askPiece(test);
+                hand.unHighlightAll();
+
+                //
+                Ansi.clearScreen();
+                //
+
+                //
+                int[] test2 = board.getPlayableIndexes(hand.get(handIndex));
+                board.highlight(test2);
+
+                view.drawBoard(board);
+                view.drawHand(hand);
+
+                int boardIndex = inputHandler.askPiece(test2);
+                board.unHighlightAll();
+
+                //
+                board.add(hand.take(handIndex), boardIndex);
             }
         }
     }

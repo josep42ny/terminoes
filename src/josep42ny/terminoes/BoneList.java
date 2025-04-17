@@ -13,7 +13,7 @@ public class BoneList {
     public BoneList() {
     }
 
-    public BoneList(Bone[] bones) {
+    public BoneList(Bone ...bones) {
         this.bones.addAll(Arrays.asList(bones));
     }
 
@@ -98,6 +98,12 @@ public class BoneList {
     public void highlight(int[] indexes) {
         for (int index : indexes) {
             bones.get(index).highlight();
+        }
+    }
+
+    public void unHighlightAll() {
+        for (Bone bone : bones) {
+            bone.unHighlight();
         }
     }
 

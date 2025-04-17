@@ -8,6 +8,7 @@ public class View {
      * @param bones An array containing the bones to be printed.
      */
     public void drawHand(BoneList bones) {
+        if (bones.size() == 0) return;
         boolean[] highlights = new boolean[bones.size()];
 
         for (int i = 0; i < bones.get(0).getParts().length; i++) {
@@ -31,9 +32,11 @@ public class View {
         System.out.println(indexes);
     }
 
+    //todo
     public void drawBoard(Board board) {
-        drawHand(board.getLeftEnd());
-        drawHand(board.getRightEnd());
+        drawHand(new BoneList(board.getCenter()));
+        if (board.getLeftArm().size() > 0) drawHand(board.getLeftArm()) ;
+        if (board.getRightArm().size() > 0) drawHand(board.getRightArm()) ;
     }
 
 }

@@ -30,4 +30,10 @@ public class Ansi {
         System.out.flush();
     }
 
+    public static void clearScreen() {
+        System.out.print("\033[H");
+        System.out.print("\033[2J");
+        System.out.flush();
+    }
+
 }

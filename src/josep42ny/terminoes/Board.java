@@ -1,14 +1,17 @@
 package josep42ny.terminoes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
 
     private Bone center;
-    private BoneList leftEnd;
-    private BoneList rightEnd;
+    private BoneList leftArm;
+    private BoneList rightArm;
 
     public Board() {
-        this.leftEnd = new BoneList();
-        this.rightEnd = new BoneList();
+        this.leftArm = new BoneList();
+        this.rightArm = new BoneList();
     }
 
     public Bone getCenter() {
@@ -19,38 +22,80 @@ public class Board {
         this.center = center;
     }
 
-    public BoneList getLeftEnd() {
-        return leftEnd;
+    public BoneList getLeftArm() {
+        return leftArm;
     }
 
-    public void setLeftEnd(BoneList leftEnd) {
-        this.leftEnd = leftEnd;
+    public BoneList getRightArm() {
+        return rightArm;
     }
 
-    public BoneList getRightEnd() {
-        return rightEnd;
-    }
-
-    public void setRightEnd(BoneList rightEnd) {
-        this.rightEnd = rightEnd;
-    }
-//fixme
     public int[] getEnds() {
         int lf;
         int rg;
 
-        if (leftEnd.size() == 0) {
+        if (leftArm.size() == 0) {
             lf = center.getLf();
         } else {
-            lf = leftEnd.get(-1).getLf();
+            lf = leftArm.get(-1).getLf();
         }
 
-        if (rightEnd.size() == 0) {
+        if (rightArm.size() == 0) {
             rg = center.getRg();
         } else {
-            rg = rightEnd.get(-1).getRg();
+            rg = rightArm.get(-1).getRg();
         }
 
         return new int[] {lf, rg};
     }
+
+    public int[] getPlayableIndexes(Bone bone) {
+        List<Integer> out = new ArrayList<>();
+        int leftValue = bone.getLf();
+        int rightValue = bone.getRg();
+        int[] ends = getEnds();
+
+        for (int i = 0; i < ends.length; i++) {
+            if (leftValue == ends[i] || rightValue == ends[i]) {
+                out.add(i);
+            }
+        }
+
+        return out.stream().mapToInt(i -> i).toArray();
+    }
+
+    public void highlight(int[] indexes) {
+        for (int index : indexes) {
+            switch (index) {
+                case 0:
+                    if(leftArm.size() > 0) {
+                        leftArm.get(-1).highlight();
+                    } else {
+                        center.highlight();
+                    }
+                    break;
+                case 1:
+                    if (rightArm.size() > 0) {
+                        rightArm.get(-1).highlight();
+                    } else {
+                        center.highlight();
+                    }
+                    break;
+            }
+        }
+    }
+
+    public void unHighlightAll() {
+        center.unHighlight();
+        leftArm.unHighlightAll();
+        rightArm.unHighlightAll();
+    }
+
+    public void add(Bone bone, int target) {
+        switch (target) {
+            case 0 -> leftArm.add(bone);
+            case 1 -> rightArm.add(bone);
+        }
+    }
+
 }
