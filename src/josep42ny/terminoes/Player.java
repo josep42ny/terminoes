@@ -21,6 +21,26 @@ public class Player {
         return hand;
     }
 
+    public int[] getPlayableIndexes(int[] targets) {
+        return hand.getPlayableIndexes(targets);
+    }
+
+    public void highlight(int[] targets) {
+        hand.highlight(targets);
+    }
+
+    public void unHighlightAll() {
+        hand.unHighlightAll();
+    }
+
+    public Bone getBone(int index) {
+        return hand.get(index);
+    }
+
+    public Bone takeBone(int index) {
+        return hand.take(index);
+    }
+
     public void setHand(BoneList hand) {
         this.hand = hand;
     }

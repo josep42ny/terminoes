@@ -32,6 +32,10 @@ public class View {
         System.out.println(indexes);
     }
 
+    public void drawHand(Player player) {
+        drawHand(player.getHand());
+    }
+
     //todo
     public void drawBoard(Board board) {
         drawHand(new BoneList(board.getCenter()));

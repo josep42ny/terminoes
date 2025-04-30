@@ -37,37 +37,39 @@ public abstract class Game {
 
         while (true) {
             for (Player player : players) {
-                Ansi.clearScreen();
-                BoneList hand = player.getHand();
 
                 //
-                int[] test = hand.getPlayableIndexes(board.getEnds());
-                hand.highlight(test);
+                Ansi.clearScreen();
+
+                int[] test = player.getPlayableIndexes(board.getEnds());
+                player.highlight(test);
 
                 view.drawBoard(board);
-                view.drawHand(hand);
+                view.drawHand(player);
 
                 int handIndex = inputHandler.askPiece(test);
-                hand.unHighlightAll();
+                player.unHighlightAll();
 
                 //
                 Ansi.clearScreen();
-                //
 
-                //
-                int[] test2 = board.getPlayableIndexes(hand.get(handIndex));
+                int[] test2 = board.getPlayableIndexes(player.getBone(handIndex));
                 board.highlight(test2);
 
                 view.drawBoard(board);
-                view.drawHand(hand);
+                view.drawHand(player);
 
                 int boardIndex = inputHandler.askPiece(test2);
                 board.unHighlightAll();
 
                 //
-                board.add(hand.take(handIndex), boardIndex);
+                board.add(player.takeBone(handIndex), boardIndex);
             }
         }
+    }
+
+    private helper(subject) {
+
     }
 
     //todo: make abstract (depends on game variation)
