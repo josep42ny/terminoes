@@ -4,6 +4,8 @@ import java.util.Random;
 
 public abstract class Game {
 
+    private final PlayerDAOFactory playerDAOFactory = new PlayerDAOFactory();
+    private PlayerDAO playerDAO = playerDAOFactory.create();
     private InputHandler inputHandler;
     private View view;
     protected Random random;
@@ -72,7 +74,15 @@ public abstract class Game {
 
                 //
                 board.add(player.takeBone(handIndex), boardIndex);
+                inputHandler.waitKeyPress();
+                playerSwapTransition();
             }
+        }
+    }
+
+    private void playerSwapTransition() {
+        if (inputHandler.askSaveGame()) {
+            playerDAO.saveAll(players);
         }
     }
 

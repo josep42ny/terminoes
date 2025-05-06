@@ -11,7 +11,7 @@ public class InputHandler {
         String in;
 
         while (true) {
-            in = System.console().readLine("Selecciona una peça: ");
+            in = System.console().readLine("Sel·lecciona una peça: ");
 
             if (in.isEmpty()) {
                 Ansi.clearPreviousLine();
@@ -36,6 +36,18 @@ public class InputHandler {
             }
         }
         throw new NumberFormatException("int does not fit constraints");
+    }
+
+    public boolean askSaveGame() {
+        boolean out = false;
+        Ansi.clearScreen();
+        out = System.console().readLine("Voleu guardar la partida [y]?").equals("y");
+        Ansi.clearScreen();
+        return out;
+    }
+
+    public void waitKeyPress() {
+        System.console().readLine("Cambieu jugadors i premeu qualsevol tecla");
     }
 
 }
