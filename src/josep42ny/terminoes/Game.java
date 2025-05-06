@@ -26,13 +26,21 @@ public abstract class Game {
                 current++;
             }
         }
-        int BONES_PER_PLAYER = 28 / (teamAmount * playersInTeam);
-        for (Player player : this.players) {
-            player.setHand(boneyard.takeRandom(BONES_PER_PLAYER));
+    }
+
+    public void gameLoop() {
+        while (true) {
+            distributeBones();
+            playRound();
+            if (maxScoreReached()) {
+                establishWinner();
+                return;
+            }
         }
     }
 
     public final void playRound() {
+
         board.setCenter(takeFirstBone());
 
         while (true) {
@@ -68,18 +76,12 @@ public abstract class Game {
         }
     }
 
-    //todo: make abstract (depends on game variation)
-    private final Bone takeFirstBone() {
-        //spanish style
-        int MAX_DOUBLE = 6;
-        for (int i = MAX_DOUBLE; i >= 0; i--) {
-            for (Player player : players) {
-                if (player.getHand().hasBone(i, i)) {
-                    return player.getHand().takeBoneByValue(i, i);
-                }
-            }
-        }
-        return players[random.nextInt(players.length)].getHand().takeRandom(1).take(0);
-    }
+    protected abstract void distributeBones();
+
+    protected abstract boolean maxScoreReached();
+
+    protected abstract void establishWinner();
+
+    protected abstract Bone takeFirstBone();
 
 }
