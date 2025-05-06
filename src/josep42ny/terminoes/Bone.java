@@ -1,9 +1,12 @@
 package josep42ny.terminoes;
+
+import java.io.Serializable;
+
 import static josep42ny.terminoes.Color.*;
 
-public class Bone {
+public class Bone implements Serializable {
 
-    private Ansi ansi;
+    transient private Ansi ansi;
     private int lf;
     private int rg;
     private Direction direction;
@@ -85,7 +88,7 @@ public class Bone {
         return new String[]{
                 "           ",
                 ansi.p(FG_WHITE).a(" ▗▄▄▄▄▄▄▄▖ ").end(),
-                ansi.p(FG_WHITE).a(" ▐").p(FG_BLACK, BG_WHITE).a(" " + first + " │ " + last + " ").p(FG_WHITE ,SHADOW).a("▌").end() + " ",
+                ansi.p(FG_WHITE).a(" ▐").p(FG_BLACK, BG_WHITE).a(" " + first + " │ " + last + " ").p(FG_WHITE, SHADOW).a("▌").end() + " ",
                 ansi.p(FG_WHITE).a(" ▝").p(SHADOW).a("▀▀▀▀▀▀▀▘").end() + " ",
                 "           "
         };

@@ -38,16 +38,14 @@ public class InputHandler {
         throw new NumberFormatException("int does not fit constraints");
     }
 
-    public boolean askSaveGame() {
-        boolean out = false;
+    public void waitPlayerSwap() {
         Ansi.clearScreen();
-        out = System.console().readLine("Voleu guardar la partida [y]?").equals("y");
+        System.console().readLine("Cambieu jugadors i premeu qualsevol tecla");
         Ansi.clearScreen();
-        return out;
     }
 
     public void waitKeyPress() {
-        System.console().readLine("Cambieu jugadors i premeu qualsevol tecla");
+        System.console().readLine("Continuar?");
     }
 
 }

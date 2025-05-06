@@ -74,16 +74,18 @@ public abstract class Game {
 
                 //
                 board.add(player.takeBone(handIndex), boardIndex);
-                inputHandler.waitKeyPress();
+                Ansi.clearScreen();
+                view.drawBoard(board);
+                view.drawHand(player);
                 playerSwapTransition();
             }
         }
     }
 
     private void playerSwapTransition() {
-        if (inputHandler.askSaveGame()) {
-            playerDAO.saveAll(players);
-        }
+        inputHandler.waitKeyPress();
+        inputHandler.waitPlayerSwap();
+        playerDAO.saveAll(players);
     }
 
     protected abstract void distributeBones();

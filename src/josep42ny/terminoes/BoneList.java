@@ -1,11 +1,12 @@
 package josep42ny.terminoes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class BoneList {
+public class BoneList implements Serializable {
 
     private final Random random = new Random();
     private final List<Bone> bones = new ArrayList<>();
@@ -13,7 +14,7 @@ public class BoneList {
     public BoneList() {
     }
 
-    public BoneList(Bone ...bones) {
+    public BoneList(Bone... bones) {
         this.bones.addAll(Arrays.asList(bones));
     }
 

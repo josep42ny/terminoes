@@ -1,6 +1,8 @@
 package josep42ny.terminoes;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
 
     private int team;
     private BoneList hand;
