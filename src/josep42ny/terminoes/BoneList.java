@@ -56,7 +56,34 @@ public class BoneList {
         return index >= 0 ? bones.get(index) : bones.get(bones.size() + index);
     }
 
+    public int getEnd() {
+        Bone end = bones.get(bones.size() - 1);
+        if (end.getDirection() == Direction.LF) {
+            return end.getLf();
+        } else {
+            return end.getRg();
+        }
+    }
+
     public void add(Bone bone) {
+        bones.add(bone);
+    }
+
+    public void addOriented(Bone bone) {
+        int lf = bone.getLf();
+        int rg = bone.getRg();
+        int end = this.getEnd();
+
+        if (lf == rg && rg == end) {
+            bone.setDirection(Direction.UP);
+        } else if (lf == end) {
+            bone.setDirection(Direction.RG);
+        } else if (rg == end) {
+            bone.setDirection(Direction.LF);
+        } else {
+            //fixme possible err handling?
+        }
+
         bones.add(bone);
     }
 
@@ -105,6 +132,10 @@ public class BoneList {
         for (Bone bone : bones) {
             bone.unHighlight();
         }
+    }
+
+    public boolean isEmpty() {
+        return bones.isEmpty();
     }
 
 }

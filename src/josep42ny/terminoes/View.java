@@ -8,7 +8,7 @@ public class View {
      * @param bones An array containing the bones to be printed.
      */
     public void drawHand(BoneList bones) {
-        if (bones.size() == 0) return;
+        if (bones.isEmpty()) return;
         boolean[] highlights = new boolean[bones.size()];
 
         for (int i = 0; i < bones.get(0).getParts().length; i++) {
@@ -38,9 +38,33 @@ public class View {
 
     //todo
     public void drawBoard(Board board) {
-        drawHand(new BoneList(board.getCenter()));
-        if (board.getLeftArm().size() > 0) drawHand(board.getLeftArm()) ;
-        if (board.getRightArm().size() > 0) drawHand(board.getRightArm()) ;
+        tempHelper(board.getLfArm(), 0);
+        tempHelper(board.getRgArm(), 1);
+    }
+
+    public void tempHelper(BoneList bones, int index) {
+        if (bones.isEmpty()) return;
+        boolean[] highlights = new boolean[bones.size()];
+
+        for (int i = 0; i < bones.get(0).getParts().length; i++) {
+            for (int j = 0; j < bones.size(); j++) {
+                System.out.print(bones.get(j).getParts()[i] + " ");
+                if (bones.get(j).isHighlighted()) {
+                    highlights[j] = true;
+                }
+            }
+            System.out.println();
+        }
+
+        String indexes = "";
+        for (boolean highlighted : highlights) {
+            if (highlighted) {
+                indexes += "     " + index + "     ";
+            } else {
+                indexes += "           ";
+            }
+        }
+        System.out.println(indexes);
     }
 
 }

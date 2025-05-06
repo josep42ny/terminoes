@@ -29,11 +29,21 @@ public class Bone {
         return rg;
     }
 
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
     public String[] getParts() {
         String[] out;
         switch (direction) {
-            case UP,DW -> out = isHighlighted() ? vPartsHiglighted(lf, rg) : vParts(rg, lf);
-            case LF,RG -> out = isHighlighted() ? hPartsHiglighted(lf, rg) : hParts(rg, lf);
+            case UP -> out = isHighlighted() ? vPartsHiglighted(lf, rg) : vParts(lf, rg);
+            case DW -> out = isHighlighted() ? vPartsHiglighted(rg, lf) : vParts(rg, lf);
+            case RG -> out = isHighlighted() ? hPartsHiglighted(lf, rg) : hParts(lf, rg);
+            case LF -> out = isHighlighted() ? hPartsHiglighted(rg, lf) : hParts(rg, lf);
             default -> out = new String[]{};
         }
         return out;
@@ -53,41 +63,41 @@ public class Bone {
 
     private String[] hParts(int first, int last) {
         return new String[]{
-                "         ",
-                ansi.p(FG_WHITE).a("▗▄▄▄▄▄▄▄▖").end(),
-                ansi.p(FG_WHITE).a("▐").p(FG_BLACK, BG_WHITE).a(" " + first + " │ " + last + " ").p(RESET, FG_WHITE).a("▌").end(),
-                ansi.p(FG_WHITE).a("▝▀▀▀▀▀▀▀▘").end(),
+                "       ",
+                ansi.p(FG_WHITE).a(" ▗▄▄▄▄▄▄▄▖ ").end(),
+                ansi.p(FG_WHITE).a(" ▐").p(FG_BLACK, BG_WHITE).a(" " + first + " │ " + last + " ").p(RESET, FG_WHITE).a("▌ ").end(),
+                ansi.p(FG_WHITE).a(" ▝▀▀▀▀▀▀▀▘ ").end(),
                 "         "
         };
     }
 
     private String[] vParts(int first, int last) {
         return new String[]{
-                ansi.p(FG_WHITE).a("  ▗▄▄▄▖  ").end(),
-                ansi.p(FG_WHITE).a("  ▐").p(FG_BLACK, BG_WHITE).a(" " + first + " ").p(RESET, FG_WHITE).a("▌  ").end(),
-                ansi.p(FG_WHITE).a("  ▐").p(FG_BLACK, BG_WHITE).a("───").p(RESET, FG_WHITE).a("▌  ").end(),
-                ansi.p(FG_WHITE).a("  ▐").p(FG_BLACK, BG_WHITE).a(" " + last + " ").p(RESET, FG_WHITE).a("▌  ").end(),
-                ansi.p(FG_WHITE).a("  ▝▀▀▀▘  ").end()
+                ansi.p(FG_WHITE).a(" ▗▄▄▄▖  ").end(),
+                ansi.p(FG_WHITE).a(" ▐").p(FG_BLACK, BG_WHITE).a(" " + first + " ").p(RESET, FG_WHITE).a("▌ ").end(),
+                ansi.p(FG_WHITE).a(" ▐").p(FG_BLACK, BG_WHITE).a("───").p(RESET, FG_WHITE).a("▌ ").end(),
+                ansi.p(FG_WHITE).a(" ▐").p(FG_BLACK, BG_WHITE).a(" " + last + " ").p(RESET, FG_WHITE).a("▌ ").end(),
+                ansi.p(FG_WHITE).a(" ▝▀▀▀▘ ").end()
         };
     }
 
     private String[] hPartsHiglighted(int first, int last) {
         return new String[]{
                 "         ",
-                ansi.p(FG_WHITE).a("  ▗▄▄▄▄▄▄▄▖  ").end(),
-                ansi.p(FG_WHITE).a("  ▐").p(FG_BLACK, BG_WHITE).a(" " + first + " │ " + last + " ").p(FG_WHITE ,SHADOW).a("▌").end() + "  ",
-                ansi.p(FG_WHITE).a("  ▝").p(SHADOW).a("▀▀▀▀▀▀▀▘").end() + "  ",
+                ansi.p(FG_WHITE).a(" ▗▄▄▄▄▄▄▄▖ ").end(),
+                ansi.p(FG_WHITE).a(" ▐").p(FG_BLACK, BG_WHITE).a(" " + first + " │ " + last + " ").p(FG_WHITE ,SHADOW).a("▌").end() + " ",
+                ansi.p(FG_WHITE).a(" ▝").p(SHADOW).a("▀▀▀▀▀▀▀▘").end() + " ",
                 "         "
         };
     }
 
     private String[] vPartsHiglighted(int first, int last) {
         return new String[]{
-                ansi.p(FG_WHITE).a("  ▗▄▄▄▖  ").end(),
-                ansi.p(FG_WHITE).a("  ▐").p(FG_BLACK, BG_WHITE).a(" " + first + " ").p(FG_WHITE, SHADOW).a("▌").end() + "  ",
-                ansi.p(FG_WHITE).a("  ▐").p(FG_BLACK, BG_WHITE).a("───").p(FG_WHITE, SHADOW).a("▌").end() + "  ",
-                ansi.p(FG_WHITE).a("  ▐").p(FG_BLACK, BG_WHITE).a(" " + last + " ").p(FG_WHITE, SHADOW).a("▌").end() + "  ",
-                ansi.p(FG_WHITE).a("  ▝").p(SHADOW).a("▀▀▀▘").end() + "  "
+                ansi.p(FG_WHITE).a(" ▗▄▄▄▖ ").end(),
+                ansi.p(FG_WHITE).a(" ▐").p(FG_BLACK, BG_WHITE).a(" " + first + " ").p(FG_WHITE, SHADOW).a("▌").end() + " ",
+                ansi.p(FG_WHITE).a(" ▐").p(FG_BLACK, BG_WHITE).a("───").p(FG_WHITE, SHADOW).a("▌").end() + "  ",
+                ansi.p(FG_WHITE).a(" ▐").p(FG_BLACK, BG_WHITE).a(" " + last + " ").p(FG_WHITE, SHADOW).a("▌").end() + " ",
+                ansi.p(FG_WHITE).a(" ▝").p(SHADOW).a("▀▀▀▘").end() + " "
         };
     }
 

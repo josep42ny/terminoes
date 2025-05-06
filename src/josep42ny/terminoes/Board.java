@@ -6,12 +6,12 @@ import java.util.List;
 public class Board {
 
     private Bone center;
-    private BoneList leftArm;
-    private BoneList rightArm;
+    private BoneList lfArm;
+    private BoneList rgArm;
 
     public Board() {
-        this.leftArm = new BoneList();
-        this.rightArm = new BoneList();
+        this.lfArm = new BoneList();
+        this.rgArm = new BoneList();
     }
 
     public Bone getCenter() {
@@ -20,40 +20,30 @@ public class Board {
 
     public void setCenter(Bone center) {
         this.center = center;
+        this.lfArm.add(center);
+        this.rgArm.add(center);
     }
 
-    public BoneList getLeftArm() {
-        return leftArm;
+    public BoneList getLfArm() {
+        return lfArm;
     }
 
-    public BoneList getRightArm() {
-        return rightArm;
+    public BoneList getRgArm() {
+        return rgArm;
     }
 
     public int[] getEnds() {
-        int lf;
-        int rg;
+        int lfEnd = lfArm.getEnd();
+        int rgEnd = rgArm.getEnd();
 
-        if (leftArm.size() == 0) {
-            lf = center.getLf();
-        } else {
-            lf = leftArm.get(-1).getLf();
-        }
-
-        if (rightArm.size() == 0) {
-            rg = center.getRg();
-        } else {
-            rg = rightArm.get(-1).getRg();
-        }
-
-        return new int[] {lf, rg};
+        return new int[] {lfEnd, rgEnd};
     }
 
     public int[] getPlayableIndexes(Bone bone) {
         List<Integer> out = new ArrayList<>();
         int leftValue = bone.getLf();
         int rightValue = bone.getRg();
-        int[] ends = getEnds();
+        int[] ends = this.getEnds();
 
         for (int i = 0; i < ends.length; i++) {
             if (leftValue == ends[i] || rightValue == ends[i]) {
@@ -67,35 +57,24 @@ public class Board {
     public void highlight(int[] indexes) {
         for (int index : indexes) {
             switch (index) {
-                case 0:
-                    if(leftArm.size() > 0) {
-                        leftArm.get(-1).highlight();
-                    } else {
-                        center.highlight();
-                    }
-                    break;
-                case 1:
-                    if (rightArm.size() > 0) {
-                        rightArm.get(-1).highlight();
-                    } else {
-                        center.highlight();
-                    }
-                    break;
+                case 0 -> lfArm.get(-1).highlight();
+                case 1 -> rgArm.get(-1).highlight();
             }
         }
     }
 
     public void unHighlightAll() {
         center.unHighlight();
-        leftArm.unHighlightAll();
-        rightArm.unHighlightAll();
+        lfArm.unHighlightAll();
+        rgArm.unHighlightAll();
     }
 
     public void add(Bone bone, int target) {
         switch (target) {
-            case 0 -> leftArm.add(bone);
-            case 1 -> rightArm.add(bone);
+            case 0 -> lfArm.addOriented(bone);
+            case 1 -> rgArm.addOriented(bone);
         }
+
     }
 
 }
