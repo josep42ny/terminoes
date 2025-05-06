@@ -63,41 +63,41 @@ public class Bone {
 
     private String[] hParts(int first, int last) {
         return new String[]{
-                "       ",
+                "           ",
                 ansi.p(FG_WHITE).a(" ▗▄▄▄▄▄▄▄▖ ").end(),
                 ansi.p(FG_WHITE).a(" ▐").p(FG_BLACK, BG_WHITE).a(" " + first + " │ " + last + " ").p(RESET, FG_WHITE).a("▌ ").end(),
                 ansi.p(FG_WHITE).a(" ▝▀▀▀▀▀▀▀▘ ").end(),
-                "         "
+                "           "
         };
     }
 
     private String[] vParts(int first, int last) {
         return new String[]{
-                ansi.p(FG_WHITE).a(" ▗▄▄▄▖  ").end(),
-                ansi.p(FG_WHITE).a(" ▐").p(FG_BLACK, BG_WHITE).a(" " + first + " ").p(RESET, FG_WHITE).a("▌ ").end(),
-                ansi.p(FG_WHITE).a(" ▐").p(FG_BLACK, BG_WHITE).a("───").p(RESET, FG_WHITE).a("▌ ").end(),
-                ansi.p(FG_WHITE).a(" ▐").p(FG_BLACK, BG_WHITE).a(" " + last + " ").p(RESET, FG_WHITE).a("▌ ").end(),
-                ansi.p(FG_WHITE).a(" ▝▀▀▀▘ ").end()
+                ansi.p(FG_WHITE).a("   ▗▄▄▄▖   ").end(),
+                ansi.p(FG_WHITE).a("   ▐").p(FG_BLACK, BG_WHITE).a(" " + first + " ").p(RESET, FG_WHITE).a("▌   ").end(),
+                ansi.p(FG_WHITE).a("   ▐").p(FG_BLACK, BG_WHITE).a("───").p(RESET, FG_WHITE).a("▌   ").end(),
+                ansi.p(FG_WHITE).a("   ▐").p(FG_BLACK, BG_WHITE).a(" " + last + " ").p(RESET, FG_WHITE).a("▌   ").end(),
+                ansi.p(FG_WHITE).a("   ▝▀▀▀▘   ").end()
         };
     }
 
     private String[] hPartsHiglighted(int first, int last) {
         return new String[]{
-                "         ",
+                "           ",
                 ansi.p(FG_WHITE).a(" ▗▄▄▄▄▄▄▄▖ ").end(),
                 ansi.p(FG_WHITE).a(" ▐").p(FG_BLACK, BG_WHITE).a(" " + first + " │ " + last + " ").p(FG_WHITE ,SHADOW).a("▌").end() + " ",
                 ansi.p(FG_WHITE).a(" ▝").p(SHADOW).a("▀▀▀▀▀▀▀▘").end() + " ",
-                "         "
+                "           "
         };
     }
 
     private String[] vPartsHiglighted(int first, int last) {
         return new String[]{
-                ansi.p(FG_WHITE).a(" ▗▄▄▄▖ ").end(),
-                ansi.p(FG_WHITE).a(" ▐").p(FG_BLACK, BG_WHITE).a(" " + first + " ").p(FG_WHITE, SHADOW).a("▌").end() + " ",
-                ansi.p(FG_WHITE).a(" ▐").p(FG_BLACK, BG_WHITE).a("───").p(FG_WHITE, SHADOW).a("▌").end() + "  ",
-                ansi.p(FG_WHITE).a(" ▐").p(FG_BLACK, BG_WHITE).a(" " + last + " ").p(FG_WHITE, SHADOW).a("▌").end() + " ",
-                ansi.p(FG_WHITE).a(" ▝").p(SHADOW).a("▀▀▀▘").end() + " "
+                ansi.p(FG_WHITE).a("   ▗▄▄▄▖   ").end(),
+                ansi.p(FG_WHITE).a("   ▐").p(FG_BLACK, BG_WHITE).a(" " + first + " ").p(FG_WHITE, SHADOW).a("▌").end() + "   ",
+                ansi.p(FG_WHITE).a("   ▐").p(FG_BLACK, BG_WHITE).a("───").p(FG_WHITE, SHADOW).a("▌").end() + "   ",
+                ansi.p(FG_WHITE).a("   ▐").p(FG_BLACK, BG_WHITE).a(" " + last + " ").p(FG_WHITE, SHADOW).a("▌").end() + "   ",
+                ansi.p(FG_WHITE).a("   ▝").p(SHADOW).a("▀▀▀▘").end() + "   "
         };
     }
 

@@ -13,7 +13,7 @@ public class View {
 
         for (int i = 0; i < bones.get(0).getParts().length; i++) {
             for (int j = 0; j < bones.size(); j++) {
-                System.out.print(bones.get(j).getParts()[i] + " ");
+                System.out.print(bones.get(j).getParts()[i]);
                 if (bones.get(j).isHighlighted()) {
                     highlights[j] = true;
                 }
@@ -24,9 +24,9 @@ public class View {
         String indexes = "";
         for (int i = 0; i < highlights.length; i++) {
             if (highlights[i]) {
-                indexes += "    " + i + "     ";
+                indexes += "     " + i + "     ";
             } else {
-                indexes += "          ";
+                indexes += "           ";
             }
         }
         System.out.println(indexes);
@@ -48,7 +48,7 @@ public class View {
 
         for (int i = 0; i < bones.get(0).getParts().length; i++) {
             for (int j = 0; j < bones.size(); j++) {
-                System.out.print(bones.get(j).getParts()[i] + " ");
+                System.out.print(bones.get(j).getParts()[i]);
                 if (bones.get(j).isHighlighted()) {
                     highlights[j] = true;
                 }
