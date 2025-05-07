@@ -1,9 +1,11 @@
 package josep42ny.terminoes;
 
+import java.util.Map;
+
 public interface PlayerDAO {
 
     void saveAll(Player[] players, int gameType);
 
-    Player[] loadAll();
+    Map<String, Player[]> loadAll();
 
 }

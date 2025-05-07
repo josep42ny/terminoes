@@ -1,5 +1,7 @@
 package josep42ny.terminoes;
 
+import java.util.Map;
+
 public class View {
 
     /**
@@ -68,22 +70,41 @@ public class View {
     }
 
     public void homeScreen() {
+        Ansi.clearScreen();
         String out =
                 " ____            _             \n" +
-                "|    \\ ___ _____|_|___ ___ ___ \n" +
-                "|  |  | . |     | |   | . |_ -|\n" +
-                "|____/|___|_|_|_|_|_|_|___|___|\n" +
-                "_______________________________\n" +
-                "\n" +
-                " New game\n" +
-                " - - - - - -\n" +
-                " [0] Spanish\n" +
-                " [1] Mexican\n" +
-                " [2] Latino\n" +
-                " [3] Colombian\n" +
-                " [4] Chilean\n";
+                        "|    \\ ___ _____|_|___ ___ ___ \n" +
+                        "|  |  | . |     | |   | . |_ -|\n" +
+                        "|____/|___|_|_|_|_|_|_|___|___|\n" +
+                        "_______________________________\n";
 
         System.out.println(out);
+    }
+
+    public void drawNewGames() {
+        String out = " Nova partida\n" +
+                " - - - - - - -\n" +
+                " [0] Espanyol\n" +
+                " [1] Mexicà\n" +
+                " [2] Llatinoamericà\n" +
+                " [3] Colombià\n" +
+                " [4] Chilè\n" +
+                " [5] Veneçolà\n" +
+                " [6] Ponce\n";
+
+        System.out.println(out);
+    }
+
+    public void drawSavedGames(Map<String, Player[]> saves) {
+        int index = 0;
+        for (Map.Entry<String, Player[]> entry : saves.entrySet()) {
+            if (entry.getValue()[0] == null) {
+                continue;
+            }
+
+            String name = entry.getKey();
+            System.out.println(" [" + index++ + "] " + name);
+        }
     }
 
 }

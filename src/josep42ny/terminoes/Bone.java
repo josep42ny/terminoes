@@ -6,7 +6,7 @@ import static josep42ny.terminoes.Color.*;
 
 public class Bone implements Serializable {
 
-    transient private Ansi ansi;
+    private Ansi ansi;
     private int lf;
     private int rg;
     private Direction direction;

@@ -4,8 +4,7 @@ import java.util.Random;
 
 public abstract class Game {
 
-    private final PlayerDAOFactory playerDAOFactory = new PlayerDAOFactory();
-    private PlayerDAO playerDAO = playerDAOFactory.create();
+    private final PlayerDAO playerDAO = new PlayerDAOFactory().create();
     private InputHandler inputHandler;
     private View view;
     protected Random random;

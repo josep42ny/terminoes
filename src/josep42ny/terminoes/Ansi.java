@@ -1,12 +1,15 @@
 package josep42ny.terminoes;
 
-public class Ansi {
+import java.io.Serializable;
+
+public class Ansi implements Serializable {
 
     private static String string = "";
 
-    public Ansi(){}
+    public Ansi() {
+    }
 
-    public Ansi p(Color ...colors) {
+    public Ansi p(Color... colors) {
         for (Color color : colors) {
             string += color;
         }

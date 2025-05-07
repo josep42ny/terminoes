@@ -1,5 +1,7 @@
 package josep42ny.terminoes;
 
+import java.util.Locale;
+
 public class InputHandler {
 
     public int askConstrainedInt(int[] constraints, String prompt) {
@@ -41,6 +43,28 @@ public class InputHandler {
 
     public void waitKeyPress() {
         System.console().readLine("Continuar?");
+    }
+
+    public boolean askBoolean(String prompt) {
+        while (true) {
+            String in = System.console().readLine(prompt).toLowerCase();
+
+            if (in.isEmpty()) {
+                Ansi.clearPreviousLine();
+                continue;
+            }
+
+            if (in.equals("y")) {
+                return true;
+            } else if (in.equals("n")) {
+                return false;
+            }
+        }
+    }
+
+    public boolean askLoad() {
+        System.out.println("S'han trobat una o mes partides guardades");
+        return askBoolean("Vols carregar una partida guardada [y/n]?");
     }
 
 }
