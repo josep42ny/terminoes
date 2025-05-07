@@ -57,7 +57,7 @@ public abstract class Game {
                 view.drawBoard(board);
                 view.drawHand(player);
 
-                int handIndex = inputHandler.askPiece(handConstraints);
+                int handIndex = inputHandler.askConstrainedInt(handConstraints, "Sel·lecciona una peça: ");
                 player.unHighlightAll();
 
                 //
@@ -69,7 +69,7 @@ public abstract class Game {
                 view.drawBoard(board);
                 view.drawHand(player);
 
-                int boardIndex = inputHandler.askPiece(boardConstraints);
+                int boardIndex = inputHandler.askConstrainedInt(boardConstraints, "Sel·lecciona una peça: ");
                 board.unHighlightAll();
 
                 //
@@ -85,7 +85,7 @@ public abstract class Game {
     private void playerSwapTransition() {
         inputHandler.waitKeyPress();
         inputHandler.waitPlayerSwap();
-        playerDAO.saveAll(players);
+        playerDAO.saveAll(players, 0);
     }
 
     protected abstract void distributeBones();

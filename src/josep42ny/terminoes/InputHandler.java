@@ -1,17 +1,12 @@
 package josep42ny.terminoes;
 
-import java.util.Arrays;
-import java.util.InputMismatchException;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
-
 public class InputHandler {
 
-    public int askPiece(int[] constraints) {
+    public int askConstrainedInt(int[] constraints, String prompt) {
         String in;
 
         while (true) {
-            in = System.console().readLine("Sel·lecciona una peça: ");
+            in = System.console().readLine(prompt);
 
             if (in.isEmpty()) {
                 Ansi.clearPreviousLine();

@@ -67,4 +67,23 @@ public class View {
         System.out.println(indexes);
     }
 
+    public void homeScreen() {
+        String out =
+                " ____            _             \n" +
+                "|    \\ ___ _____|_|___ ___ ___ \n" +
+                "|  |  | . |     | |   | . |_ -|\n" +
+                "|____/|___|_|_|_|_|_|_|___|___|\n" +
+                "_______________________________\n" +
+                "\n" +
+                " New game\n" +
+                " - - - - - -\n" +
+                " [0] Spanish\n" +
+                " [1] Mexican\n" +
+                " [2] Latino\n" +
+                " [3] Colombian\n" +
+                " [4] Chilean\n";
+
+        System.out.println(out);
+    }
+
 }
