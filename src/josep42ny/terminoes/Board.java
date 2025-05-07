@@ -1,9 +1,10 @@
 package josep42ny.terminoes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Board {
+public class Board implements Serializable {
 
     private Bone center;
     private BoneList lfArm;
@@ -36,7 +37,7 @@ public class Board {
         int lfEnd = lfArm.getEnd();
         int rgEnd = rgArm.getEnd();
 
-        return new int[] {lfEnd, rgEnd};
+        return new int[]{lfEnd, rgEnd};
     }
 
     public int[] getPlayableIndexes(Bone bone) {

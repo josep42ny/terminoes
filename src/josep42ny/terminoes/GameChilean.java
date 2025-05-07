@@ -26,8 +26,7 @@ public class GameChilean extends Game {
     }
 
     @Override
-    protected Bone takeFirstBone() {
-        return null;
+    protected void placeFirstBone() {
     }
 
 }

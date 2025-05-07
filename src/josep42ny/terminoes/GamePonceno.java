@@ -26,8 +26,7 @@ public class GamePonceno extends Game {
     }
 
     @Override
-    protected Bone takeFirstBone() {
-        return null;
+    protected void placeFirstBone() {
     }
 
 }

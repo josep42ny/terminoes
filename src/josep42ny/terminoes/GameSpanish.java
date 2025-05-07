@@ -10,6 +10,10 @@ public class GameSpanish extends Game {
         this(players, 1);
     }
 
+    public GameSpanish() {
+
+    }
+
     @Override
     protected void distributeBones() {
         int BONES_PER_PLAYER = 28 / players.length;
@@ -29,15 +33,17 @@ public class GameSpanish extends Game {
     }
 
     @Override
-    protected Bone takeFirstBone() {
+    protected void placeFirstBone() {
+        Bone bone;
         int MAX_DOUBLE = 6;
         for (int i = MAX_DOUBLE; i >= 0; i--) {
             for (Player player : players) {
                 if (player.getHand().hasBone(i, i)) {
-                    return player.getHand().takeBoneByValue(i, i);
+                    bone = player.getHand().takeBoneByValue(i, i);
                 }
             }
         }
-        return players[random.nextInt(players.length)].getHand().takeRandom(1).take(0);
+        bone = players[random.nextInt(players.length)].getHand().takeRandom(1).take(0);
+        board.setCenter(bone);
     }
 }

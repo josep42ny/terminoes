@@ -1,16 +1,22 @@
 package josep42ny.terminoes;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public abstract class Game {
+public abstract class Game implements Serializable {
 
-    private final PlayerDAO playerDAO = new PlayerDAOFactory().create();
+    transient private final GameDAO gameDAO = new GameDAOFactory().create();
+    // todo make abstract these clases to get rid of pain in the ass references
     private InputHandler inputHandler;
     private View view;
+    // ;
     protected Random random;
-    protected final Player[] players;
+    protected Player[] players;
     protected BoneList boneyard;
     protected Board board;
+
+    public Game() {
+    }
 
     protected Game(int teamAmount, int playersInTeam) {
         this.inputHandler = new InputHandler();
@@ -29,9 +35,23 @@ public abstract class Game {
         }
     }
 
+    public void startGame() {
+        gameLoop();
+    }
+
+    public void resumeGame() {
+        playRound();
+        if (maxScoreReached()) {
+            establishWinner();
+            return;
+        }
+        gameLoop();
+    }
+
     public void gameLoop() {
         while (true) {
             distributeBones();
+            placeFirstBone();
             playRound();
             if (maxScoreReached()) {
                 establishWinner();
@@ -42,7 +62,6 @@ public abstract class Game {
 
     public final void playRound() {
 
-        board.setCenter(takeFirstBone());
 
         while (true) {
             for (Player player : players) {
@@ -84,7 +103,7 @@ public abstract class Game {
     private void playerSwapTransition() {
         inputHandler.waitKeyPress();
         inputHandler.waitPlayerSwap();
-        playerDAO.saveAll(players, 0);
+        gameDAO.saveAll(this, 0);
     }
 
     protected abstract void distributeBones();
@@ -93,6 +112,6 @@ public abstract class Game {
 
     protected abstract void establishWinner();
 
-    protected abstract Bone takeFirstBone();
+    protected abstract void placeFirstBone();
 
 }

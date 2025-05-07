@@ -1,8 +1,9 @@
 package josep42ny.terminoes;
 
+import java.io.Serializable;
 import java.util.Locale;
 
-public class InputHandler {
+public class InputHandler implements Serializable {
 
     public int askConstrainedInt(int[] constraints, String prompt) {
         String in;
@@ -32,12 +33,12 @@ public class InputHandler {
                 return out;
             }
         }
-        throw new NumberFormatException("int does not fit constraints");
+        throw new NumberFormatException("Int does not fit constraints");
     }
 
     public void waitPlayerSwap() {
         Ansi.clearScreen();
-        System.console().readLine("Cambieu jugadors i premeu qualsevol tecla");
+        System.console().readLine("Canvieu jugadors i premeu qualsevol tecla");
         Ansi.clearScreen();
     }
 

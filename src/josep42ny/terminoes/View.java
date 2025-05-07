@@ -1,8 +1,9 @@
 package josep42ny.terminoes;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class View {
+public class View implements Serializable {
 
     /**
      * Prints a Bone array to screen arranged in a single row.
@@ -23,12 +24,12 @@ public class View {
             System.out.println();
         }
 
-        String indexes = "";
+        StringBuilder indexes = new StringBuilder();
         for (int i = 0; i < highlights.length; i++) {
             if (highlights[i]) {
-                indexes += "     " + i + "     ";
+                indexes.append("     ").append(i).append("     ");
             } else {
-                indexes += "           ";
+                indexes.append("           ");
             }
         }
         System.out.println(indexes);
@@ -58,12 +59,12 @@ public class View {
             System.out.println();
         }
 
-        String indexes = "";
+        StringBuilder indexes = new StringBuilder();
         for (boolean highlighted : highlights) {
             if (highlighted) {
-                indexes += "     " + index + "     ";
+                indexes.append("     ").append(index).append("     ");
             } else {
-                indexes += "           ";
+                indexes.append("           ");
             }
         }
         System.out.println(indexes);
@@ -71,34 +72,37 @@ public class View {
 
     public void homeScreen() {
         Ansi.clearScreen();
-        String out =
-                " ____            _             \n" +
-                        "|    \\ ___ _____|_|___ ___ ___ \n" +
-                        "|  |  | . |     | |   | . |_ -|\n" +
-                        "|____/|___|_|_|_|_|_|_|___|___|\n" +
-                        "_______________________________\n";
+        String out = """
+                 ____            _            \s
+                |    \\ ___ _____|_|___ ___ ___\s
+                |  |  | . |     | |   | . |_ -|
+                |____/|___|_|_|_|_|_|_|___|___|
+                _______________________________
+                """;
 
         System.out.println(out);
     }
 
     public void drawNewGames() {
-        String out = " Nova partida\n" +
-                " - - - - - - -\n" +
-                " [0] Espanyol\n" +
-                " [1] Mexicà\n" +
-                " [2] Llatinoamericà\n" +
-                " [3] Colombià\n" +
-                " [4] Chilè\n" +
-                " [5] Veneçolà\n" +
-                " [6] Ponce\n";
+        String out = """
+                 Nova partida
+                 - - - - - - -
+                  [0] Espanyol
+                  [1] Mexicà
+                  [2] Llatinoamericà
+                  [3] Colombià
+                  [4] Chilè
+                  [5] Veneçolà
+                  [6] Ponce
+                """;
 
         System.out.println(out);
     }
 
-    public void drawSavedGames(Map<String, Player[]> saves) {
+    public void drawSavedGames(Map<String, Game> saves) {
         int index = 0;
-        for (Map.Entry<String, Player[]> entry : saves.entrySet()) {
-            if (entry.getValue()[0] == null) {
+        for (Map.Entry<String, Game> entry : saves.entrySet()) {
+            if (entry.getValue() == null) {
                 continue;
             }
 
