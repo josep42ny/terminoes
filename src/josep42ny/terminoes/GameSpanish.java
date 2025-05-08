@@ -40,6 +40,8 @@ public class GameSpanish extends Game {
             for (Player player : players) {
                 if (player.getHand().hasBone(i, i)) {
                     bone = player.getHand().takeBoneByValue(i, i);
+                    board.setCenter(bone);
+                    return;
                 }
             }
         }

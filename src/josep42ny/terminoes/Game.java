@@ -5,10 +5,8 @@ import java.util.Random;
 
 public abstract class Game implements Serializable {
 
-    transient private final GameDAO gameDAO = new GameDAOFactory().create();
-    // todo make abstract these clases to get rid of pain in the ass references
-    private InputHandler inputHandler;
-    private View view;
+    private final GameDAO gameDAO;
+    // todo make abstract these classes to get rid of pain in the ass references
     // ;
     protected Random random;
     protected Player[] players;
@@ -16,11 +14,11 @@ public abstract class Game implements Serializable {
     protected Board board;
 
     public Game() {
+        this.gameDAO = new GameDAOFactory().create();
     }
 
     protected Game(int teamAmount, int playersInTeam) {
-        this.inputHandler = new InputHandler();
-        this.view = new View();
+        this.gameDAO = new GameDAOFactory().create();
         this.random = new Random();
         this.board = new Board();
         this.boneyard = new BoneList();
@@ -61,8 +59,6 @@ public abstract class Game implements Serializable {
     }
 
     public final void playRound() {
-
-
         while (true) {
             for (Player player : players) {
 
@@ -72,10 +68,10 @@ public abstract class Game implements Serializable {
                 int[] handConstraints = player.getPlayableIndexes(board.getEnds());
                 player.highlight(handConstraints);
 
-                view.drawBoard(board);
-                view.drawHand(player);
+                View.drawBoard(board);
+                View.drawHand(player);
 
-                int handIndex = inputHandler.askConstrainedInt(handConstraints, "Sel·lecciona una peça: ");
+                int handIndex = InputHandler.askConstrainedInt(handConstraints, "Selecciona una peça: ");
                 player.unHighlightAll();
 
                 //
@@ -84,25 +80,25 @@ public abstract class Game implements Serializable {
                 int[] boardConstraints = board.getPlayableIndexes(player.getBone(handIndex));
                 board.highlight(boardConstraints);
 
-                view.drawBoard(board);
-                view.drawHand(player);
+                View.drawBoard(board);
+                View.drawHand(player);
 
-                int boardIndex = inputHandler.askConstrainedInt(boardConstraints, "Sel·lecciona una peça: ");
+                int boardIndex = InputHandler.askConstrainedInt(boardConstraints, "Selecciona una peça: ");
                 board.unHighlightAll();
 
                 //
                 board.add(player.takeBone(handIndex), boardIndex);
                 Ansi.clearScreen();
-                view.drawBoard(board);
-                view.drawHand(player);
+                View.drawBoard(board);
+                View.drawHand(player);
                 playerSwapTransition();
             }
         }
     }
 
     private void playerSwapTransition() {
-        inputHandler.waitKeyPress();
-        inputHandler.waitPlayerSwap();
+        InputHandler.waitKeyPress();
+        InputHandler.waitPlayerSwap();
         gameDAO.saveAll(this, 0);
     }
 

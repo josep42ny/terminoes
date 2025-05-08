@@ -1,16 +1,10 @@
 package josep42ny.terminoes;
 
-import java.io.Serializable;
 import java.util.Map;
 
-public class View implements Serializable {
+public class View {
 
-    /**
-     * Prints a Bone array to screen arranged in a single row.
-     *
-     * @param bones An array containing the bones to be printed.
-     */
-    public void drawHand(BoneList bones) {
+    public static void drawHand(BoneList bones) {
         if (bones.isEmpty()) return;
         boolean[] highlights = new boolean[bones.size()];
 
@@ -35,17 +29,17 @@ public class View implements Serializable {
         System.out.println(indexes);
     }
 
-    public void drawHand(Player player) {
+    public static void drawHand(Player player) {
         drawHand(player.getHand());
     }
 
     //todo
-    public void drawBoard(Board board) {
+    public static void drawBoard(Board board) {
         tempHelper(board.getLfArm(), 0);
         tempHelper(board.getRgArm(), 1);
     }
 
-    public void tempHelper(BoneList bones, int index) {
+    public static void tempHelper(BoneList bones, int index) {
         if (bones.isEmpty()) return;
         boolean[] highlights = new boolean[bones.size()];
 
@@ -70,7 +64,7 @@ public class View implements Serializable {
         System.out.println(indexes);
     }
 
-    public void homeScreen() {
+    public static void homeScreen() {
         Ansi.clearScreen();
         String out = """
                  ____            _            \s
@@ -83,7 +77,7 @@ public class View implements Serializable {
         System.out.println(out);
     }
 
-    public void drawNewGames() {
+    public static void drawNewGames() {
         String out = """
                  Nova partida
                  - - - - - - -
@@ -99,7 +93,7 @@ public class View implements Serializable {
         System.out.println(out);
     }
 
-    public void drawSavedGames(Map<String, Game> saves) {
+    public static void drawSavedGames(Map<String, Game> saves) {
         int index = 0;
         for (Map.Entry<String, Game> entry : saves.entrySet()) {
             if (entry.getValue() == null) {

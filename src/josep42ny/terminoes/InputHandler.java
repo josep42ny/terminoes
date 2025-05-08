@@ -1,11 +1,8 @@
 package josep42ny.terminoes;
 
-import java.io.Serializable;
-import java.util.Locale;
+public class InputHandler {
 
-public class InputHandler implements Serializable {
-
-    public int askConstrainedInt(int[] constraints, String prompt) {
+    public static int askConstrainedInt(int[] constraints, String prompt) {
         String in;
 
         while (true) {
@@ -25,7 +22,7 @@ public class InputHandler implements Serializable {
         }
     }
 
-    private int parseConstrainedInt(int[] constraints, String in) throws NumberFormatException {
+    private static int parseConstrainedInt(int[] constraints, String in) throws NumberFormatException {
         int out = Integer.parseInt(in);
 
         for (int constraint : constraints) {
@@ -36,17 +33,17 @@ public class InputHandler implements Serializable {
         throw new NumberFormatException("Int does not fit constraints");
     }
 
-    public void waitPlayerSwap() {
+    public static void waitPlayerSwap() {
         Ansi.clearScreen();
         System.console().readLine("Canvieu jugadors i premeu qualsevol tecla");
         Ansi.clearScreen();
     }
 
-    public void waitKeyPress() {
+    public static void waitKeyPress() {
         System.console().readLine("Continuar?");
     }
 
-    public boolean askBoolean(String prompt) {
+    public static boolean askBoolean(String prompt) {
         while (true) {
             String in = System.console().readLine(prompt).toLowerCase();
 
@@ -59,11 +56,13 @@ public class InputHandler implements Serializable {
                 return true;
             } else if (in.equals("n")) {
                 return false;
+            } else {
+                Ansi.clearPreviousLine();
             }
         }
     }
 
-    public boolean askLoad() {
+    public static boolean askLoad() {
         System.out.println("S'han trobat una o mes partides guardades");
         return askBoolean("Vols carregar una partida guardada [y/n]?");
     }

@@ -6,14 +6,10 @@ import java.util.Map;
 
 public class GameController {
 
-    private final View view;
-    private final InputHandler inputHandler;
     private GameDAO gameDAO;
     private final int[] GAME_INDEXES = new int[]{0, 1, 2, 3, 4, 5, 6};
 
     public GameController() {
-        this.inputHandler = new InputHandler();
-        this.view = new View();
         this.gameDAO = new GameDAOFactory().create();
     }
 
@@ -21,20 +17,21 @@ public class GameController {
         Map<String, Game> saves = gameDAO.loadAll();
         boolean wantsToLoad = false;
 
-        view.homeScreen();
+        View.homeScreen();
         if (foundSaveIn(saves)) {
-            wantsToLoad = inputHandler.askLoad();
+            wantsToLoad = InputHandler.askLoad();
         }
 
-        view.homeScreen();
+        View.homeScreen();
         if (wantsToLoad) {
-            view.drawSavedGames(saves);
-            int selection = inputHandler.askConstrainedInt(getSaveIndexes(saves), "Selecciona un mode [0-6]: ");
-            Game save = saves.get(saves.keySet().toArray()[selection]);
-            save.resumeGame();
+            View.drawSavedGames(saves);
+            int selection = InputHandler.askConstrainedInt(getSaveIndexes(saves), "Selecciona un mode [0-6]: ");
+            String saveName = saves.keySet().toArray()[selection].toString();
+            Game game = saves.get(saveName);
+            game.resumeGame();
         } else {
-            view.drawNewGames();
-            int selection = inputHandler.askConstrainedInt(GAME_INDEXES, "Selecciona un mode [0-6]: ");
+            View.drawNewGames();
+            int selection = InputHandler.askConstrainedInt(GAME_INDEXES, "Selecciona un mode [0-6]: ");
             Game game = switch (selection) {
                 case 0 -> new GameSpanish(2);
                 case 1 -> new GameMexican(2);

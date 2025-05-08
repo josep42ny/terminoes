@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameDAOBinaryImplementation implements GameDAO {
+public class GameDAOBinaryImplementation implements GameDAO, Serializable {
 
     private final String[] SAVE_PATHS = new String[]{"spanish.bin", "mexican.bin", "latino.bin", "colombian.bin", "chilean.bin", "venezuelan.bin", "ponce.bin"};
     private final String[] SAVE_NAMES = new String[]{"Espanyol", "Mexicà", "Llatinoamericà", "Colombià", "Chilè", "Veneçolà", "Ponce"};
