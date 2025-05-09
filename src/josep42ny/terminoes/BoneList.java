@@ -139,4 +139,23 @@ public class BoneList implements Serializable {
         return bones.isEmpty();
     }
 
+    public boolean canPlay(int[] targets) {
+        for (int target : targets) {
+            for (Bone bone : bones) {
+                if (bone.getLf() == target || bone.getRg() == target) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public int getPoints() {
+        int points = 0;
+        for (Bone bone : bones) {
+            points += bone.getLf() + bone.getRg();
+        }
+        return points;
+    }
+
 }

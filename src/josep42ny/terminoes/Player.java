@@ -6,9 +6,11 @@ public class Player implements Serializable {
 
     private int team;
     private BoneList hand;
+    private int score;
 
     public Player(int team) {
         this.team = team;
+        this.score = 0;
     }
 
     public void setTeam(int team) {
@@ -46,4 +48,33 @@ public class Player implements Serializable {
     public void setHand(BoneList hand) {
         this.hand = hand;
     }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void addScore(int score) {
+        this.score += score;
+    }
+
+    public boolean canPlay(int... targets) {
+        return hand.canPlay(targets);
+    }
+
+    public boolean hasBone(int lfValue, int rgValue) {
+        return hand.hasBone(lfValue, rgValue);
+    }
+
+    public Bone takeBoneByValue(int lfValue, int rgValue) {
+        return hand.takeBoneByValue(lfValue, rgValue);
+    }
+
+    public BoneList takeRandom(int amount) throws OutOfBones {
+        return hand.takeRandom(amount);
+    }
+
+    public int getHandPoints() {
+        return hand.getPoints();
+    }
+
 }

@@ -7,45 +7,59 @@ public class GameSpanish extends Game {
     }
 
     public GameSpanish(int players) {
-        this(players, 1);
-    }
-
-    public GameSpanish() {
-
+        super(players);
     }
 
     @Override
-    protected void distributeBones() {
-        int BONES_PER_PLAYER = 28 / players.length;
+    protected int establishWinner() {
+        int winner = 0;
+        int[] teams = new int[teamAmount];
         for (Player player : players) {
-            player.setHand(boneyard.takeRandom(BONES_PER_PLAYER));
+            teams[player.getTeam()] += player.getScore();
+            if (teams[player.getTeam()] >= maxScore) {
+                winner = player.getTeam();
+            }
         }
+        return winner;
     }
 
     @Override
-    protected boolean maxScoreReached() {
-        return false;
-    }
-
-    @Override
-    protected void establishWinner() {
-
-    }
-
-    @Override
-    protected void placeFirstBone() {
+    protected int placeFirstBone() {
         Bone bone;
         int MAX_DOUBLE = 6;
         for (int i = MAX_DOUBLE; i >= 0; i--) {
-            for (Player player : players) {
-                if (player.getHand().hasBone(i, i)) {
-                    bone = player.getHand().takeBoneByValue(i, i);
+            for (int index = 0; index < players.length; index++) {
+                if (players[index].hasBone(i, i)) {
+                    bone = players[index].takeBoneByValue(i, i);
                     board.setCenter(bone);
-                    return;
+                    return index;
                 }
             }
         }
-        bone = players[random.nextInt(players.length)].getHand().takeRandom(1).take(0);
+        int randIndex = random.nextInt(players.length);
+        bone = players[randIndex].takeRandom(1).take(0);
         board.setCenter(bone);
+        return randIndex;
+    }
+
+    @Override
+    protected void handleTanca() {
+        Player winner = players[0];
+        int lowestPoints = players[0].getHandPoints();
+        int allHandsPoints = 0;
+        for (int i = 1; i < players.length; i++) {
+            int playerPoints = players[i].getHandPoints();
+            allHandsPoints += playerPoints;
+            if (playerPoints < lowestPoints) {
+                winner = players[i];
+                lowestPoints = playerPoints;
+            }
+        }
+        winner.addScore(allHandsPoints);
+    }
+
+    @Override
+    protected void handlePass() {
+
     }
 }

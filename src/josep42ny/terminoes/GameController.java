@@ -28,20 +28,22 @@ public class GameController {
             int selection = InputHandler.askConstrainedInt(getSaveIndexes(saves), "Selecciona un mode [0-6]: ");
             String saveName = saves.keySet().toArray()[selection].toString();
             Game game = saves.get(saveName);
+            Ansi.clearScreen();
             game.resumeGame();
         } else {
             View.drawNewGames();
             int selection = InputHandler.askConstrainedInt(GAME_INDEXES, "Selecciona un mode [0-6]: ");
             Game game = switch (selection) {
-                case 0 -> new GameSpanish(2);
-                case 1 -> new GameMexican(2);
-                case 2 -> new GameLatino(2);
-                case 3 -> new GameColombian(2);
-                case 4 -> new GameChilean(2);
-                case 5 -> new GameVenezuelan(2);
-                case 6 -> new GamePonceno(2);
+                case 0 -> new GameSpanish(4);
+                case 1 -> new GameMexican(4);
+                case 2 -> new GameLatino(4);
+                case 3 -> new GameColombian(4);
+                case 4 -> new GameChilean(4);
+                case 5 -> new GameVenezuelan(4);
+                case 6 -> new GamePonceno(4);
                 default -> throw new IllegalStateException("Unexpected value: " + selection);
             };
+            Ansi.clearScreen();
             game.startGame();
         }
     }

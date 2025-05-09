@@ -11,22 +11,23 @@ public class GameLatino extends Game {
     }
 
     @Override
-    protected void distributeBones() {
+    protected int establishWinner() {
+        return 0;
+    }
+
+    @Override
+    protected void handleTanca() {
 
     }
 
     @Override
-    protected boolean maxScoreReached() {
-        return false;
-    }
-
-    @Override
-    protected void establishWinner() {
+    protected void handlePass() {
 
     }
 
     @Override
-    protected void placeFirstBone() {
+    protected int placeFirstBone() {
+        return 0;
     }
 
 }

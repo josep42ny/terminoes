@@ -35,6 +35,18 @@ public class View {
 
     //todo
     public static void drawBoard(Board board) {
+//        BoneList lf = board.getLfArm();
+//        int height = (lf.size() + 2) / 7;
+//        System.out.println(height);
+//
+//        Bone[][] outer = new Bone[height + 1][7];
+//        for (int i = height; i >= 0; i--) {
+//            System.out.println(7 % ((i * 7) + 3));
+//            //for (int j = 0; j < ; j++) {
+//            //outer[i][j] =
+//            //}
+//        }
+
         tempHelper(board.getLfArm(), 0);
         tempHelper(board.getRgArm(), 1);
     }
