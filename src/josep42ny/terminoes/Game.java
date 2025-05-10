@@ -41,26 +41,28 @@ public abstract class Game implements Serializable {
         this(players, 1);
     }
 
-    public int startGame() {
-        return gameLoop();
+    public void startGame() {
+        gameLoop();
     }
 
-    public int resumeGame() {
+    public void resumeGame() {
         playRound();
         if (maxScoreReached()) {
-            return establishWinner();
+            View.displayWinner(establishWinner());
+            return;
         }
-        return gameLoop();
+        gameLoop();
     }
 
-    public int gameLoop() {
+    public void gameLoop() {
         while (true) {
             distributeBones();
             current = placeFirstBone();
             advancePlayer();
             playRound();
             if (maxScoreReached()) {
-                return establishWinner();
+                View.displayWinner(establishWinner());
+                return;
             }
         }
     }

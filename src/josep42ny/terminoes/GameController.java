@@ -30,7 +30,7 @@ public class GameController {
             String saveName = saves.keySet().toArray()[selection].toString();
             Game game = saves.get(saveName);
             Ansi.clearScreen();
-            winnerId = game.resumeGame();
+            game.resumeGame();
             gameDAO.delete(saveName);
         } else {
             View.drawNewGames();
@@ -46,10 +46,8 @@ public class GameController {
                 default -> throw new IllegalStateException("Unexpected value: " + selection);
             };
             Ansi.clearScreen();
-            winnerId = game.startGame();
+            game.startGame();
         }
-
-        View.displayWinner(winnerId);
     }
 
 
