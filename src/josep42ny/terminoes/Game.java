@@ -15,30 +15,31 @@ public abstract class Game implements Serializable {
     protected int maxScore;
     protected int current;
 
-    public Game() {
+    protected Game(int playerAmount) {
         this.gameDAO = new GameDAOFactory().create();
-    }
-
-    protected Game(int teamAmount, int playersInTeam) {
-        this.teamAmount = teamAmount;
-        this.playerAmount = teamAmount * playersInTeam;
-        this.gameDAO = new GameDAOFactory().create();
+        this.maxScore = maxScore();
         this.random = new Random();
         this.board = new Board();
         this.boneyard = new BoneList();
         this.boneyard.fill();
-        this.players = new Player[teamAmount * playersInTeam];
+        this.players = new Player[4];
+        this.playerAmount = playerAmount;
+
+        if (allowSingleplayer() && InputHandler.askBoolean("Vols jugar individualment [y/n]?")) {
+            this.teamAmount = playerAmount;
+        } else {
+            this.teamAmount = 2;
+        }
+
         int current = 0;
+        int playersInTeam = playerAmount / teamAmount;
         for (int player = 0; player < playersInTeam; player++) {
             for (int teamIndex = 0; teamIndex < teamAmount; teamIndex++) {
                 players[current] = new Player(teamIndex);
                 current++;
             }
         }
-    }
 
-    public Game(int players) {
-        this(players, 1);
     }
 
     public void startGame() {
@@ -48,7 +49,7 @@ public abstract class Game implements Serializable {
     public void resumeGame() {
         playRound();
         if (maxScoreReached()) {
-            View.displayWinner(establishWinner());
+            View.displayWinner(establishGameWinner());
             return;
         }
         gameLoop();
@@ -61,7 +62,7 @@ public abstract class Game implements Serializable {
             advancePlayer();
             playRound();
             if (maxScoreReached()) {
-                View.displayWinner(establishWinner());
+                View.displayWinner(establishGameWinner());
                 return;
             }
         }
@@ -116,12 +117,8 @@ public abstract class Game implements Serializable {
                 return;
             }
 
-            // todo sabado
             if (player.getHand().isEmpty()) {
-                for (Player player1 : players) {
-                    player.addScore(player1.getHandPoints());
-                }
-                return;
+                handleRoundWinner();
             }
 
             playerSwap();
@@ -166,13 +163,19 @@ public abstract class Game implements Serializable {
         return false;
     }
 
-    protected abstract int establishWinner();
+    protected abstract int establishGameWinner();
 
     protected abstract void handleTanca();
 
     protected abstract void handlePass();
 
+    protected abstract void handleRoundWinner();
+
     // returns the index of the player the bone is taken from
     protected abstract int placeFirstBone();
+
+    protected abstract boolean allowSingleplayer();
+
+    protected abstract int maxScore();
 
 }

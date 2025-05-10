@@ -2,16 +2,12 @@ package josep42ny.terminoes;
 
 public class GameColombian extends Game {
 
-    public GameColombian(int teamAmount, int playersInTeam) {
-        super(teamAmount, playersInTeam);
-    }
-
     public GameColombian(int players) {
-        this(players, 1);
+        super(players);
     }
 
     @Override
-    protected int establishWinner() {
+    protected int establishGameWinner() {
         return 0;
     }
 
@@ -30,4 +26,18 @@ public class GameColombian extends Game {
         return 0;
     }
 
+    @Override
+    protected void handleRoundWinner() {
+
+    }
+
+    @Override
+    protected boolean allowSingleplayer() {
+        return false;
+    }
+
+    @Override
+    protected int maxScore() {
+        return 100;
+    }
 }

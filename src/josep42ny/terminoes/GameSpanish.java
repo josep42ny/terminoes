@@ -2,16 +2,12 @@ package josep42ny.terminoes;
 
 public class GameSpanish extends Game {
 
-    public GameSpanish(int teams, int playersInTeam) {
-        super(teams, playersInTeam);
-    }
-
     public GameSpanish(int players) {
         super(players);
     }
 
     @Override
-    protected int establishWinner() {
+    protected int establishGameWinner() {
         int winner = 0;
         int[] teams = new int[teamAmount];
         for (Player player : players) {
@@ -58,8 +54,26 @@ public class GameSpanish extends Game {
         winner.addScore(allHandsPoints);
     }
 
+
+    protected void handleRoundWinner() {
+        Player winner = players[current];
+        for (Player player : players) {
+            winner.addScore(player.getHandPoints());
+        }
+    }
+
     @Override
     protected void handlePass() {
 
+    }
+
+    @Override
+    protected boolean allowSingleplayer() {
+        return true;
+    }
+
+    @Override
+    protected int maxScore() {
+        return 200;
     }
 }
