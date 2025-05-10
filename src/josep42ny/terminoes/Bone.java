@@ -40,6 +40,10 @@ public class Bone implements Serializable {
         this.direction = direction;
     }
 
+    public int getValue() {
+        return lf + rg;
+    }
+
     public String[] getParts() {
         String[] out;
         switch (direction) {
