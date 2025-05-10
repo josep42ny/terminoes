@@ -57,6 +57,10 @@ public class Player implements Serializable {
         this.score += score;
     }
 
+    public void subScore(int score) {
+        this.score = Math.max(0, this.score - score);
+    }
+
     public boolean canPlay(int... targets) {
         return hand.canPlay(targets);
     }

@@ -46,23 +46,25 @@ public class GameMexican extends Game {
     @Override
     protected void handleTanca() {
         int[] teamPoints = new int[teamAmount];
+
+        // Count hand points per team
         for (Player player : players) {
             teamPoints[player.getTeam()] += player.getHandPoints();
         }
 
-        int winingTeam = 0;
-        int minPoints = teamPoints[winingTeam];
+        // Find team with the lowest hand points
+        int winningTeam = 0;
         int totalPoints = 0;
-        for (int team = 1; team < teamAmount; team++) {
-            if (teamPoints[team] < minPoints) {
-                totalPoints += teamPoints[team];
-                minPoints = teamPoints[team];
-                winingTeam = team;
+        for (int team = 0; team < teamAmount; team++) {
+            totalPoints += teamPoints[team];
+            if (teamPoints[team] < teamPoints[winningTeam]) {
+                winningTeam = team;
             }
         }
 
         for (Player player : players) {
-            if (player.getTeam() == winingTeam) {
+            if (player.getTeam() == winningTeam) {
+                // Only one player on the winning team gets the points
                 totalPoints -= player.getHandPoints();
                 player.addScore(totalPoints);
                 return;

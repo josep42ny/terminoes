@@ -57,9 +57,12 @@ public class GameSpanish extends Game {
 
     protected void handleRoundWinner() {
         Player winner = players[current];
+        int roundPoints = 0;
         for (Player player : players) {
-            winner.addScore(player.getHandPoints());
+            roundPoints += player.getHandPoints();
         }
+        roundPoints -= winner.getHandPoints();
+        winner.addScore(roundPoints);
     }
 
     @Override
