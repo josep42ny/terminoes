@@ -22,6 +22,7 @@ public class GameSpanish extends Game {
     @Override
     protected int placeFirstBone() {
         Bone bone;
+
         int MAX_DOUBLE = 6;
         for (int i = MAX_DOUBLE; i >= 0; i--) {
             for (int index = 0; index < players.length; index++) {
@@ -32,8 +33,9 @@ public class GameSpanish extends Game {
                 }
             }
         }
+
         int randIndex = random.nextInt(players.length);
-        bone = players[randIndex].takeRandom(1).take(0);
+        bone = players[randIndex].takeRandom(1).get(0);
         board.setCenter(bone);
         return randIndex;
     }

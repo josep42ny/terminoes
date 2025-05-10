@@ -73,7 +73,7 @@ public class GameLatino extends Game {
             }
         }
         int randIndex = random.nextInt(players.length);
-        bone = players[randIndex].takeRandom(1).take(0);
+        bone = players[randIndex].takeRandom(1).get(0);
         board.setCenter(bone);
         return randIndex;
     }
