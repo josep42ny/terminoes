@@ -41,8 +41,8 @@ public abstract class Game implements Serializable {
         this(players, 1);
     }
 
-    public void startGame() {
-        gameLoop();
+    public int startGame() {
+        return gameLoop();
     }
 
     public int resumeGame() {
@@ -70,6 +70,9 @@ public abstract class Game implements Serializable {
             Player player = players[current];
             int[] boardEnds = board.getEnds();
 
+            View.drawBoard(board);
+            View.drawHand(player);
+
             if (!player.canPlay(boardEnds)) {
                 handlePass();
                 playerSwap();
@@ -77,10 +80,11 @@ public abstract class Game implements Serializable {
             }
 
             //
+            Ansi.clearScreen();
 
             int[] handConstraints = player.getPlayableIndexes(boardEnds);
-            player.highlight(handConstraints);
 
+            player.highlight(handConstraints);
             View.drawBoard(board);
             View.drawHand(player);
 
@@ -91,8 +95,8 @@ public abstract class Game implements Serializable {
             Ansi.clearScreen();
 
             int[] boardConstraints = board.getPlayableIndexes(player.getBone(handIndex));
-            board.highlight(boardConstraints);
 
+            board.highlight(boardConstraints);
             View.drawBoard(board);
             View.drawHand(player);
 

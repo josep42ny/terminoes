@@ -8,4 +8,6 @@ public interface GameDAO {
 
     Map<String, Game> loadAll();
 
+    void delete(String saveName);
+
 }

@@ -117,4 +117,11 @@ public class View {
         }
     }
 
+    public static void displayWinner(int winnerId) {
+        Ansi.clearScreen();
+
+        System.out.println("L'equip o jugador guanyador es el " + winnerId);
+        System.out.println("Felicitats");
+    }
+
 }

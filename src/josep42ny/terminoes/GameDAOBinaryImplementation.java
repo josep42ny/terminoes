@@ -46,4 +46,10 @@ public class GameDAOBinaryImplementation implements GameDAO, Serializable {
 
         return saves;
     }
+
+    @Override
+    public void delete(String saveName) {
+        File file = new File(saveName);
+        file.delete();
+    }
 }

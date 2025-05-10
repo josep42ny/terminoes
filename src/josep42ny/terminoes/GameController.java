@@ -14,6 +14,7 @@ public class GameController {
     }
 
     public void awake() {
+        int winnerId;
         Map<String, Game> saves = gameDAO.loadAll();
         boolean wantsToLoad = false;
 
@@ -29,7 +30,8 @@ public class GameController {
             String saveName = saves.keySet().toArray()[selection].toString();
             Game game = saves.get(saveName);
             Ansi.clearScreen();
-            game.resumeGame();
+            winnerId = game.resumeGame();
+            gameDAO.delete(saveName);
         } else {
             View.drawNewGames();
             int selection = InputHandler.askConstrainedInt(GAME_INDEXES, "Selecciona un mode [0-6]: ");
@@ -44,8 +46,10 @@ public class GameController {
                 default -> throw new IllegalStateException("Unexpected value: " + selection);
             };
             Ansi.clearScreen();
-            game.startGame();
+            winnerId = game.startGame();
         }
+
+        View.displayWinner(winnerId);
     }
 
 
