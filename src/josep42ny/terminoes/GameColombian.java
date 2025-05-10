@@ -28,7 +28,12 @@ public class GameColombian extends Game {
 
     @Override
     protected void handleRoundWinner() {
-
+        int winnerTeam = players[current].getTeam();
+        for (Player player : players) {
+            if (player.getTeam() != winnerTeam) {
+                players[current].addScore(player.getHandPoints());
+            }
+        }
     }
 
     @Override
