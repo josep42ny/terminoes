@@ -1,5 +1,10 @@
 package josep42ny.terminoes;
 
+import josep42ny.terminoes.persistance.GameDAO;
+import josep42ny.terminoes.persistance.GameDAOFactory;
+import josep42ny.terminoes.utilities.Ansi;
+import josep42ny.terminoes.utilities.InputHandler;
+
 import java.io.Serializable;
 import java.util.Random;
 

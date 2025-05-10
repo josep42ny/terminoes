@@ -1,5 +1,7 @@
 package josep42ny.terminoes;
 
+import josep42ny.terminoes.utilities.Ansi;
+
 import java.util.Map;
 
 public class View {

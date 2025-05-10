@@ -1,12 +1,17 @@
 package josep42ny.terminoes;
 
+import josep42ny.terminoes.persistance.GameDAO;
+import josep42ny.terminoes.persistance.GameDAOFactory;
+import josep42ny.terminoes.utilities.Ansi;
+import josep42ny.terminoes.utilities.InputHandler;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class GameController {
 
-    private GameDAO gameDAO;
+    private final GameDAO gameDAO;
     private final int[] GAME_INDEXES = new int[]{0, 1, 2, 3, 4, 5, 6};
 
     public GameController() {

@@ -1,4 +1,4 @@
-package josep42ny.terminoes;
+package josep42ny.terminoes.persistance;
 
 public class GameDAOFactory {
 

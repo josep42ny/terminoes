@@ -1,4 +1,6 @@
-package josep42ny.terminoes;
+package josep42ny.terminoes.persistance;
+
+import josep42ny.terminoes.Game;
 
 import java.util.Map;
 
