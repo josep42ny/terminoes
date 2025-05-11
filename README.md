@@ -1,5 +1,9 @@
 # terminoes
 
+```bash
+ javac -d out $(find src -name "*.java") && java -cp out josep42ny.terminoes.Main
+```
+
 ## Característiques comunes
 
 - **Ús de fitxes de dòmino**: Totes les variants utilitzen fitxes dobles des del doble blanc (0-0) fins al doble sis (
