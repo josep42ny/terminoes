@@ -60,6 +60,11 @@ public class GameLatino extends Game {
     }
 
     @Override
+    protected int playFirstRoundStarter() {
+        return playNextRoundStarter();
+    }
+
+    @Override
     protected int playNextRoundStarter() {
         Bone bone;
         int MAX_DOUBLE = 6;

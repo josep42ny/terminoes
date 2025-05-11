@@ -7,6 +7,11 @@ public class GameMexican extends Game {
     }
 
     @Override
+    protected int playFirstRoundStarter() {
+        return playNextRoundStarter();
+    }
+
+    @Override
     protected int playNextRoundStarter() {
         int maxBoneValue = 0;
         int maxBoneIndex = 0;

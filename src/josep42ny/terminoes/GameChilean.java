@@ -53,7 +53,7 @@ public class GameChilean extends Game {
     }
 
     @Override
-    protected int playNextRoundStarter() {
+    protected int playFirstRoundStarter() {
         Bone bone;
 
         int MAX_DOUBLE = 6;
@@ -71,6 +71,13 @@ public class GameChilean extends Game {
         bone = players[randIndex].takeRandom(1).get(0);
         board.setCenter(bone);
         return randIndex;
+    }
+
+    @Override
+    protected int playNextRoundStarter() {
+        Bone bone = players[currentPlayer].takeBiggest();
+        board.setCenter(bone);
+        return currentPlayer;
     }
 
     @Override
