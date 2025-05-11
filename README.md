@@ -9,8 +9,6 @@
 - **Nombre de jugadors**: Quatre jugadors en dues parelles, algunes variants permeten que es jugui individualment.
 - **Torns per ronda**: Es juga en sentit horari fins que una parella o jugador arribi a la puntuació màxima del joc.
 
----
-
 ## Característiques individuals
 
 ### Dòmino Mexicà
@@ -18,8 +16,8 @@
 - **Jugadors**: Quatre jugadors individuals, o dues parelles fixes.
 - **Objectiu**: Arribar a 200 o 300 punts.
 - **Sortida**: Fitxa més alta després de barrejar.
-- **Puntuació**: Es sumen tots els punts restants.
-- **Tancament**: Guanya la parella o jugador amb menys punts; es sumen tots els punts restants.
+- **Puntuació**: Se sumen tots els punts restants.
+- **Tancament**: Guanya la parella o jugador amb menys punts; se sumen tots els punts restants.
 - **Pas**: No especificat.
 
 ### Dòmino Llatí
@@ -27,8 +25,8 @@
 - **Jugadors**: Dues parelles.
 - **Objectiu**: Arribar a 100 o 200 punts.
 - **Sortida**: Comença qui tingui el doble sis.
-- **Puntuació**: Es sumen els punts de la parella perdedora.
-- **Tancament**: Guanya la parella amb menys punts; es sumen els punts de la perdedora.
+- **Puntuació**: Se sumen els punts de la parella perdedora.
+- **Tancament**: Guanya la parella amb menys punts; se sumen els punts de la perdedora.
 - **Pas**: S'afegeixen 25 o 30 punts al que el provoca.
 
 ### Dòmino Colombià
@@ -36,16 +34,16 @@
 - **Jugadors**: Dues parelles.
 - **Objectiu**: Arribar a 100 punts.
 - **Sortida**: Comença qui tingui el doble sis; després, qui guanyi la ronda.
-- **Puntuació**: Es sumen els punts de la parella perdedora.
-- **Tancament**: Guanya la parella amb menys punts; es sumen els punts de la perdedora.
+- **Puntuació**: Se sumen els punts de la parella perdedora.
+- **Tancament**: Guanya la parella amb menys punts; se sumen els punts de la perdedora.
 - **Pas**: No especificat (es juga amb diners).
 
-### Dòmino Xinilè
+### Dòmino Xilè
 
 - **Jugadors**: Quatre jugadors individuals, o dues parelles fixes.
 - **Objectiu**: Quan un jugador arribi a 121 punts o més, guanya qui tingui **menys punts**.
 - **Sortida**: Comença qui tingui el 6-6; després gira en sentit horari.
-- **Puntuació**: Cada jugador o parella acumula el seu puntatge; qui arribi a 121 perd.
+- **Puntuació**: Cada jugador o parella acumula els seus punts; qui arribi a 121 perd.
 - **Tancament**: Qui tingui més punts suma els punts de tots els altres al seu total.
 - **Pas**: No especificat.
 
@@ -54,8 +52,8 @@
 - **Jugadors**: Dues parelles.
 - **Objectiu**: Arribar a 75 o 100 punts.
 - **Sortida**: Comença qui tingui el 6-6 (la "cochina"); després gira en sentit horari.
-- **Puntuació**: Es sumen els punts de la parella perdedora.
-- **Tancament**: Guanya la parella amb menys punts; es sumen els punts de la perdedora.
+- **Puntuació**: Se sumen els punts de la parella perdedora.
+- **Tancament**: Guanya la parella amb menys punts; se sumen els punts de la perdedora.
 - **Pas**: No especificat.
 
 ### Dòmino de Ponce
