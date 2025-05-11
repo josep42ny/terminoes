@@ -94,7 +94,7 @@ public class GameLatino extends Game {
     }
 
     @Override
-    protected boolean allowSingleplayer() {
+    protected boolean allowSinglePlayer() {
         return false;
     }
 

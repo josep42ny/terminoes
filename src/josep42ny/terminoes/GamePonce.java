@@ -1,8 +1,8 @@
 package josep42ny.terminoes;
 
-public class GameColombian extends Game {
+public class GamePonce extends Game {
 
-    public GameColombian(int players) {
+    public GamePonce(int players) {
         super(players);
     }
 
@@ -21,41 +21,33 @@ public class GameColombian extends Game {
 
     @Override
     protected void handleTanca() {
-        int[] teamPoints = new int[teamAmount];
+        players[currentPlayer].addScore(2);
 
-        // Count hand points per team
-        for (Player player : players) {
-            teamPoints[player.getTeam()] += player.getHandPoints();
-        }
-
-        // Find team with the lowest hand points
-        int winningTeam = 0;
-        for (int team = 0; team < teamAmount; team++) {
-            if (teamPoints[team] < teamPoints[winningTeam]) {
-                winningTeam = team;
+        int min = 0;
+        int total = players[min].getScore();
+        for (int i = 1; i < players.length; i++) {
+            total += players[i].getScore();
+            if (players[i].getScore() < players[min].getScore()) {
+                min = i;
             }
         }
-
-        // Sum points of losing teams
-        int totalPoints = 0;
-        for (int i = 0; i < teamPoints.length; i++) {
-            if (i != winningTeam) {
-                totalPoints += teamPoints[i];
-            }
-        }
+        players[min].addScore(total);
 
         for (Player player : players) {
-            if (player.getTeam() == winningTeam) {
-                // Only one player on the winning team gets the points
-                player.addScore(totalPoints);
-                return;
-            }
+            int rounded = (int) (Math.round(player.getScore() / 10.0) * 10);
+            player.setScore(rounded);
         }
     }
 
     @Override
     protected void handlePass() {
-
+        int previous = --currentPlayer % players.length;
+        if (firstPass) {
+            players[previous].addScore(2);
+            firstPass = false;
+        } else {
+            players[previous].addScore(1);
+        }
     }
 
     @Override
@@ -81,18 +73,17 @@ public class GameColombian extends Game {
 
     @Override
     protected int playNextRoundStarter() {
-        Bone bone = players[currentPlayer].takeBiggest();
+        int next = ++currentPlayer % players.length;
+        Bone bone = players[next].takeBiggest();
         board.setCenter(bone);
-        return currentPlayer;
+        return next;
     }
 
     @Override
     protected void handleRoundWinner() {
-        int winnerTeam = players[currentPlayer].getTeam();
         for (Player player : players) {
-            if (player.getTeam() != winnerTeam) {
-                players[currentPlayer].addScore(player.getHandPoints());
-            }
+            int rounded = (int) (Math.round(player.getScore() / 10.0) * 10);
+            player.setScore(rounded);
         }
     }
 
@@ -103,6 +94,6 @@ public class GameColombian extends Game {
 
     @Override
     protected int maxScore() {
-        return 100;
+        return 20;
     }
 }

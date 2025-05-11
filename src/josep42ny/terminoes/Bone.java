@@ -8,9 +8,9 @@ import static josep42ny.terminoes.utilities.Color.*;
 
 public class Bone implements Serializable {
 
-    private Ansi ansi;
-    private int lf;
-    private int rg;
+    private final Ansi ansi;
+    private final int lf;
+    private final int rg;
     private Direction direction;
     private boolean highlighted;
 
@@ -49,10 +49,10 @@ public class Bone implements Serializable {
     public String[] getParts() {
         String[] out;
         switch (direction) {
-            case UP -> out = isHighlighted() ? vPartsHiglighted(lf, rg) : vParts(lf, rg);
-            case DW -> out = isHighlighted() ? vPartsHiglighted(rg, lf) : vParts(rg, lf);
-            case RG -> out = isHighlighted() ? hPartsHiglighted(lf, rg) : hParts(lf, rg);
-            case LF -> out = isHighlighted() ? hPartsHiglighted(rg, lf) : hParts(rg, lf);
+            case UP -> out = isHighlighted() ? vPartsHighlighted(lf, rg) : vParts(lf, rg);
+            case DW -> out = isHighlighted() ? vPartsHighlighted(rg, lf) : vParts(rg, lf);
+            case RG -> out = isHighlighted() ? hPartsHighlighted(lf, rg) : hParts(lf, rg);
+            case LF -> out = isHighlighted() ? hPartsHighlighted(rg, lf) : hParts(rg, lf);
             default -> out = new String[]{};
         }
         return out;
@@ -90,7 +90,7 @@ public class Bone implements Serializable {
         };
     }
 
-    private String[] hPartsHiglighted(int first, int last) {
+    private String[] hPartsHighlighted(int first, int last) {
         return new String[]{
                 "           ",
                 ansi.p(FG_WHITE).a(" ▗▄▄▄▄▄▄▄▖ ").end(),
@@ -100,7 +100,7 @@ public class Bone implements Serializable {
         };
     }
 
-    private String[] vPartsHiglighted(int first, int last) {
+    private String[] vPartsHighlighted(int first, int last) {
         return new String[]{
                 ansi.p(FG_WHITE).a("   ▗▄▄▄▖   ").end(),
                 ansi.p(FG_WHITE).a("   ▐").p(FG_BLACK, BG_WHITE).a(" " + first + " ").p(FG_WHITE, SHADOW).a("▌").end() + "   ",

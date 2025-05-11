@@ -7,16 +7,12 @@ import java.util.List;
 public class Board implements Serializable {
 
     private Bone center;
-    private BoneList lfArm;
-    private BoneList rgArm;
+    private final BoneList lfArm;
+    private final BoneList rgArm;
 
     public Board() {
         this.lfArm = new BoneList();
         this.rgArm = new BoneList();
-    }
-
-    public Bone getCenter() {
-        return center;
     }
 
     public void setCenter(Bone center) {

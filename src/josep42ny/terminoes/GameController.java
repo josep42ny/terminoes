@@ -20,7 +20,6 @@ public class GameController {
     }
 
     public void awake() {
-        int winnerId;
         Map<String, Game> saves = gameDAO.loadAll();
         boolean wantsToLoad = false;
 
@@ -48,7 +47,7 @@ public class GameController {
                 case 3 -> new GameColombian(4);
                 case 4 -> new GameChilean(4);
                 case 5 -> new GameVenezuelan(4);
-                case 6 -> new GamePonceno(4);
+                case 6 -> new GamePonce(4);
                 default -> throw new IllegalStateException("Unexpected value: " + selection);
             };
             Ansi.clearScreen();

@@ -27,10 +27,6 @@ public class BoneList implements Serializable {
         }
     }
 
-    public Bone[] toArray() {
-        return bones.toArray(new Bone[0]);
-    }
-
     public Bone take(int index) {
         return bones.remove(index);
     }
@@ -58,7 +54,7 @@ public class BoneList implements Serializable {
     }
 
     public int getEnd() {
-        Bone end = bones.get(bones.size() - 1);
+        Bone end = bones.getLast();
         if (end.getDirection() == Direction.LF) {
             return end.getLf();
         } else {
@@ -81,8 +77,6 @@ public class BoneList implements Serializable {
             bone.setDirection(Direction.RG);
         } else if (rg == end) {
             bone.setDirection(Direction.LF);
-        } else {
-            //fixme possible err handling?
         }
 
         bones.add(bone);
@@ -90,7 +84,6 @@ public class BoneList implements Serializable {
 
     public int[] getPlayableIndexes(int[] targets) {
         List<Integer> out = new ArrayList<>();
-        int count = 0;
 
         for (int i = 0; i < bones.size(); i++) {
             for (int target : targets) {

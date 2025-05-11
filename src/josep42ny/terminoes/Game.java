@@ -21,6 +21,7 @@ public abstract class Game implements Serializable {
     protected int maxScore;
     protected int currentPlayer;
     boolean firstRound = true;
+    boolean firstPass = true;
 
     protected Game(int playerAmount) {
         this.gameDAO = new GameDAOFactory().create();
@@ -32,7 +33,7 @@ public abstract class Game implements Serializable {
         this.players = new Player[4];
         this.playerAmount = playerAmount;
 
-        if (allowSingleplayer() && InputHandler.askBoolean("Vols jugar individualment [y/n]?")) {
+        if (allowSinglePlayer() && InputHandler.askBoolean("Vols jugar individualment [y/n]?")) {
             this.teamAmount = playerAmount;
         } else {
             this.teamAmount = 2;
@@ -131,6 +132,7 @@ public abstract class Game implements Serializable {
 
             if (player.getHand().isEmpty()) {
                 handleRoundWinner();
+                return;
             }
 
             playerSwap();
@@ -188,7 +190,7 @@ public abstract class Game implements Serializable {
 
     protected abstract int playFirstRoundStarter();
 
-    protected abstract boolean allowSingleplayer();
+    protected abstract boolean allowSinglePlayer();
 
     protected abstract int maxScore();
 

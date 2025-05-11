@@ -94,7 +94,7 @@ public class GameMexican extends Game {
     }
 
     @Override
-    protected boolean allowSingleplayer() {
+    protected boolean allowSinglePlayer() {
         return true;
     }
 

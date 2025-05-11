@@ -81,9 +81,10 @@ public class GameVenezuelan extends Game {
 
     @Override
     protected int playNextRoundStarter() {
-        Bone bone = players[currentPlayer].takeBiggest();
+        int next = ++currentPlayer % players.length;
+        Bone bone = players[next].takeBiggest();
         board.setCenter(bone);
-        return currentPlayer;
+        return next;
     }
 
     @Override
@@ -97,7 +98,7 @@ public class GameVenezuelan extends Game {
     }
 
     @Override
-    protected boolean allowSingleplayer() {
+    protected boolean allowSinglePlayer() {
         return false;
     }
 

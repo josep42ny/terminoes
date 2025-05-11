@@ -96,7 +96,7 @@ public class GameSpanish extends Game {
     }
 
     @Override
-    protected boolean allowSingleplayer() {
+    protected boolean allowSinglePlayer() {
         return true;
     }
 

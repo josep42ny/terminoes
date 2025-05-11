@@ -4,17 +4,13 @@ import java.io.Serializable;
 
 public class Player implements Serializable {
 
-    private int team;
+    private final int team;
     private BoneList hand;
     private int score;
 
     public Player(int team) {
         this.team = team;
         this.score = 0;
-    }
-
-    public void setTeam(int team) {
-        this.team = team;
     }
 
     public int getTeam() {
@@ -51,6 +47,10 @@ public class Player implements Serializable {
 
     public int getScore() {
         return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public void addScore(int score) {
