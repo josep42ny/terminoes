@@ -55,12 +55,12 @@ public class GameLatino extends Game {
 
     @Override
     protected void handlePass() {
-        players[current].subScore(25);
-        players[(current + 1) % players.length].addScore(25);
+        players[currentPlayer].subScore(25);
+        players[(currentPlayer + 1) % players.length].addScore(25);
     }
 
     @Override
-    protected int placeFirstBone() {
+    protected int playNextRoundStarter() {
         Bone bone;
         int MAX_DOUBLE = 6;
         for (int i = MAX_DOUBLE; i >= 0; i--) {
@@ -80,10 +80,10 @@ public class GameLatino extends Game {
 
     @Override
     protected void handleRoundWinner() {
-        int winnerTeam = players[current].getTeam();
+        int winnerTeam = players[currentPlayer].getTeam();
         for (Player player : players) {
             if (player.getTeam() != winnerTeam) {
-                players[current].addScore(player.getHandPoints());
+                players[currentPlayer].addScore(player.getHandPoints());
             }
         }
     }

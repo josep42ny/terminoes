@@ -20,7 +20,12 @@ public class GameSpanish extends Game {
     }
 
     @Override
-    protected int placeFirstBone() {
+    protected int playFirstRoundStarter() {
+        return playNextRoundStarter();
+    }
+
+    @Override
+    protected int playNextRoundStarter() {
         Bone bone;
 
         int MAX_DOUBLE = 6;
@@ -42,23 +47,41 @@ public class GameSpanish extends Game {
 
     @Override
     protected void handleTanca() {
-        Player winner = players[0];
-        int lowestPoints = players[0].getHandPoints();
-        int allHandsPoints = 0;
-        for (int i = 1; i < players.length; i++) {
-            int playerPoints = players[i].getHandPoints();
-            allHandsPoints += playerPoints;
-            if (playerPoints < lowestPoints) {
-                winner = players[i];
-                lowestPoints = playerPoints;
+        int[] teamPoints = new int[teamAmount];
+
+        // Count hand points per team
+        for (Player player : players) {
+            teamPoints[player.getTeam()] += player.getHandPoints();
+        }
+
+        // Find team with the lowest hand points
+        int winningTeam = 0;
+        for (int team = 0; team < teamAmount; team++) {
+            if (teamPoints[team] < teamPoints[winningTeam]) {
+                winningTeam = team;
             }
         }
-        winner.addScore(allHandsPoints);
+
+        // Sum points of losing teams
+        int totalPoints = 0;
+        for (int i = 0; i < teamPoints.length; i++) {
+            if (i != winningTeam) {
+                totalPoints += teamPoints[i];
+            }
+        }
+
+        for (Player player : players) {
+            if (player.getTeam() == winningTeam) {
+                // Only one player on the winning team gets the points
+                player.addScore(totalPoints);
+                return;
+            }
+        }
     }
 
     @Override
     protected void handleRoundWinner() {
-        Player winner = players[current];
+        Player winner = players[currentPlayer];
         int roundPoints = 0;
         for (Player player : players) {
             roundPoints += player.getHandPoints();

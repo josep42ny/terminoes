@@ -22,7 +22,7 @@ public class GamePonceno extends Game {
     }
 
     @Override
-    protected int placeFirstBone() {
+    protected int playNextRoundStarter() {
         return 0;
     }
 

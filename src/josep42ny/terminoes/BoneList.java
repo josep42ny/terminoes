@@ -158,4 +158,14 @@ public class BoneList implements Serializable {
         return points;
     }
 
+    public Bone takeBiggest() {
+        int biggest = 0;
+        for (int i = 0; i < bones.size(); i++) {
+            if (bones.get(i).getValue() > bones.get(biggest).getValue()) {
+                biggest = i;
+            }
+        }
+        return take(biggest);
+    }
+
 }

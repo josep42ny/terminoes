@@ -7,7 +7,7 @@ public class GameMexican extends Game {
     }
 
     @Override
-    protected int placeFirstBone() {
+    protected int playNextRoundStarter() {
         int maxBoneValue = 0;
         int maxBoneIndex = 0;
         int playerIndex = 0;
@@ -79,7 +79,7 @@ public class GameMexican extends Game {
 
     @Override
     protected void handleRoundWinner() {
-        Player winner = players[current];
+        Player winner = players[currentPlayer];
         int roundPoints = 0;
         for (Player player : players) {
             roundPoints += player.getHandPoints();

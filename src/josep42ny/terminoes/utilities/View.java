@@ -1,6 +1,9 @@
-package josep42ny.terminoes;
+package josep42ny.terminoes.utilities;
 
-import josep42ny.terminoes.utilities.Ansi;
+import josep42ny.terminoes.Board;
+import josep42ny.terminoes.BoneList;
+import josep42ny.terminoes.Game;
+import josep42ny.terminoes.Player;
 
 import java.util.Map;
 

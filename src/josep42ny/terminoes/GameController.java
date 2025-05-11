@@ -4,6 +4,7 @@ import josep42ny.terminoes.persistance.GameDAO;
 import josep42ny.terminoes.persistance.GameDAOFactory;
 import josep42ny.terminoes.utilities.Ansi;
 import josep42ny.terminoes.utilities.InputHandler;
+import josep42ny.terminoes.utilities.View;
 
 import java.util.ArrayList;
 import java.util.List;

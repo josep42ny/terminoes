@@ -81,4 +81,8 @@ public class Player implements Serializable {
         return hand.getPoints();
     }
 
+    public Bone takeBiggest() {
+        return hand.takeBiggest();
+    }
+
 }

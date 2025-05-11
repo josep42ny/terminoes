@@ -53,7 +53,7 @@ public class GameChilean extends Game {
     }
 
     @Override
-    protected int placeFirstBone() {
+    protected int playNextRoundStarter() {
         Bone bone;
 
         int MAX_DOUBLE = 6;

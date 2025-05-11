@@ -59,7 +59,12 @@ public class GameVenezuelan extends Game {
     }
 
     @Override
-    protected int placeFirstBone() {
+    protected int playFirstRoundStarter() {
+        return playNextRoundStarter();
+    }
+
+    @Override
+    protected int playNextRoundStarter() {
         Bone bone;
 
         int MAX_DOUBLE = 6;
@@ -81,10 +86,10 @@ public class GameVenezuelan extends Game {
 
     @Override
     protected void handleRoundWinner() {
-        int winnerTeam = players[current].getTeam();
+        int winnerTeam = players[currentPlayer].getTeam();
         for (Player player : players) {
             if (player.getTeam() != winnerTeam) {
-                players[current].addScore(player.getHandPoints());
+                players[currentPlayer].addScore(player.getHandPoints());
             }
         }
     }

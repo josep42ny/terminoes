@@ -1,7 +1,5 @@
 package josep42ny.terminoes.utilities;
 
-import josep42ny.terminoes.Color;
-
 import java.io.Serializable;
 
 public class Ansi implements Serializable {

@@ -4,6 +4,7 @@ import josep42ny.terminoes.persistance.GameDAO;
 import josep42ny.terminoes.persistance.GameDAOFactory;
 import josep42ny.terminoes.utilities.Ansi;
 import josep42ny.terminoes.utilities.InputHandler;
+import josep42ny.terminoes.utilities.View;
 
 import java.io.Serializable;
 import java.util.Random;
@@ -18,7 +19,8 @@ public abstract class Game implements Serializable {
     protected int teamAmount;
     protected int playerAmount;
     protected int maxScore;
-    protected int current;
+    protected int currentPlayer;
+    boolean firstRound = true;
 
     protected Game(int playerAmount) {
         this.gameDAO = new GameDAOFactory().create();
@@ -63,8 +65,13 @@ public abstract class Game implements Serializable {
     public void gameLoop() {
         while (true) {
             distributeBones();
-            current = placeFirstBone();
-            advancePlayer();
+            if (firstRound) {
+                currentPlayer = playFirstRoundStarter();
+                firstRound = false;
+            } else {
+                currentPlayer = playNextRoundStarter();
+            }
+            nextPlayer();
             playRound();
             if (maxScoreReached()) {
                 View.displayWinner(establishGameWinner());
@@ -75,7 +82,7 @@ public abstract class Game implements Serializable {
 
     public final void playRound() {
         while (true) {
-            Player player = players[current];
+            Player player = players[currentPlayer];
             int[] boardEnds = board.getEnds();
 
             View.drawBoard(board);
@@ -142,12 +149,12 @@ public abstract class Game implements Serializable {
     private void playerSwap() {
         InputHandler.waitKeyPress();
         InputHandler.waitPlayerSwap();
-        advancePlayer();
+        nextPlayer();
         gameDAO.saveAll(this, 0);
     }
 
-    private void advancePlayer() {
-        current = ++current % players.length;
+    private void nextPlayer() {
+        currentPlayer = ++currentPlayer % players.length;
     }
 
     private void distributeBones() {
@@ -177,7 +184,9 @@ public abstract class Game implements Serializable {
     protected abstract void handleRoundWinner();
 
     // returns the index of the player the bone is taken from
-    protected abstract int placeFirstBone();
+    protected abstract int playNextRoundStarter();
+
+    protected abstract int playFirstRoundStarter();
 
     protected abstract boolean allowSingleplayer();
 

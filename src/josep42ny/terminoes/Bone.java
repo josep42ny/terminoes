@@ -4,7 +4,7 @@ import josep42ny.terminoes.utilities.Ansi;
 
 import java.io.Serializable;
 
-import static josep42ny.terminoes.Color.*;
+import static josep42ny.terminoes.utilities.Color.*;
 
 public class Bone implements Serializable {
 
