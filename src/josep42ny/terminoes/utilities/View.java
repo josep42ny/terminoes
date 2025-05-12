@@ -4,10 +4,15 @@ import josep42ny.terminoes.Board;
 import josep42ny.terminoes.BoneList;
 import josep42ny.terminoes.Game;
 import josep42ny.terminoes.Player;
+import josep42ny.terminoes.Bone;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class View {
+
+    private static final String empty = "           ";
 
     public static void drawHand(BoneList bones) {
         if (bones.isEmpty()) return;
@@ -38,8 +43,62 @@ public class View {
         drawHand(player.getHand());
     }
 
-    //todo
     public static void drawBoard(Board board) {
+        List<Bone[]> partsLf = new ArrayList<>(6);
+
+        BoneList lf = board.getLfArm();
+        int height = (lf.size() + 2) / 7;
+        int s = 3;
+        int index = 0;
+
+        System.out.println(height);
+        for (int i = 0; i <= height; i++) {
+
+            Bone[] part = new Bone[7];
+
+            for (int j = s; j < part.length; j++) {
+                if (index >= lf.size()) {
+                    part[j] = null;
+                } else {
+                    part[j] = lf.get(index++);
+                }
+                s = 0;
+            }
+
+            partsLf.add(part);
+        }
+
+        for (Bone[] part : partsLf.reversed()) {
+            tempHelper(new BoneList(part), 1);
+        }
+
+        List<Bone[]> partsRg = new ArrayList<>(6);
+        BoneList rg = board.getRgArm();
+        int heightrg = (rg.size() + 2) / 7;
+        int d = 3;
+        int indexrg = 0;
+
+        System.out.println(heightrg);
+        for (int i = 0; i <= heightrg; i++) {
+
+            Bone[] part = new Bone[7];
+
+            for (int j = d; j < part.length; j++) {
+                if (indexrg >= rg.size()) {
+                    part[j] = null;
+                } else {
+                    part[j] = rg.get(indexrg++);
+                }
+                d = 0;
+            }
+
+            partsRg.add(part);
+        }
+
+        for (Bone[] part : partsRg.reversed()) {
+            tempHelper(new BoneList(part), 1);
+        }
+
 //        BoneList lf = board.getLfArm();
 //        int height = (lf.size() + 2) / 7;
 //        System.out.println(height);
@@ -52,19 +111,23 @@ public class View {
 //            //}
 //        }
 
-        tempHelper(board.getLfArm(), 0);
-        tempHelper(board.getRgArm(), 1);
+        //tempHelper(board.getLfArm(), 0);
+        //tempHelper(board.getRgArm(), 1);
     }
 
     public static void tempHelper(BoneList bones, int index) {
         if (bones.isEmpty()) return;
         boolean[] highlights = new boolean[bones.size()];
-
-        for (int i = 0; i < bones.get(0).getParts().length; i++) {
+        int PART_AMOUNT = 5;
+        for (int i = 0; i < PART_AMOUNT; i++) {
             for (int j = 0; j < bones.size(); j++) {
-                System.out.print(bones.get(j).getParts()[i]);
-                if (bones.get(j).isHighlighted()) {
-                    highlights[j] = true;
+                if (bones.get(j) == null) {
+                    System.out.print("...........");
+                } else {
+                    System.out.print(bones.get(j).getParts()[i]);
+                    if (bones.get(j).isHighlighted()) {
+                        highlights[j] = true;
+                    }
                 }
             }
             System.out.println();
