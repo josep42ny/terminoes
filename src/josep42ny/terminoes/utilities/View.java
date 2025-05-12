@@ -51,7 +51,6 @@ public class View {
         int s = 3;
         int index = 0;
 
-        System.out.println(height);
         for (int i = 0; i <= height; i++) {
 
             Bone[] part = new Bone[7];
@@ -78,7 +77,6 @@ public class View {
         int d = 3;
         int indexrg = 0;
 
-        System.out.println(heightrg);
         for (int i = 0; i <= heightrg; i++) {
 
             Bone[] part = new Bone[7];
