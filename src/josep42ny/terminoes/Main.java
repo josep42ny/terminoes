@@ -6,8 +6,8 @@ public class Main {
         Thread printingHook = new Thread(() -> System.out.println("\nSortint...\n"));
         Runtime.getRuntime().addShutdownHook(printingHook);
 
-        GameController gameController = new GameController();
-        gameController.awake();
+        GameLoader gameLoader = new GameLoader();
+        gameLoader.awake();
     }
 
 }

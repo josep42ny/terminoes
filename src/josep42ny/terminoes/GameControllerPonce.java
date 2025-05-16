@@ -20,7 +20,7 @@ public class GamePonce extends Game {
     }
 
     @Override
-    protected void handleTanca() {
+    protected void handleTranca() {
         players[currentPlayer].addScore(2);
 
         int min = 0;

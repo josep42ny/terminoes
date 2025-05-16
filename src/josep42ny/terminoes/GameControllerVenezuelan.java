@@ -1,8 +1,8 @@
 package josep42ny.terminoes;
 
-public class GameColombian extends Game {
+public class GameVenezuelan extends Game {
 
-    public GameColombian(int players) {
+    public GameVenezuelan(int players) {
         super(players);
     }
 
@@ -20,7 +20,7 @@ public class GameColombian extends Game {
     }
 
     @Override
-    protected void handleTanca() {
+    protected void handleTranca() {
         int[] teamPoints = new int[teamAmount];
 
         // Count hand points per team
@@ -81,9 +81,10 @@ public class GameColombian extends Game {
 
     @Override
     protected int playNextRoundStarter() {
-        Bone bone = players[currentPlayer].takeBiggest();
+        int next = ++currentPlayer % players.length;
+        Bone bone = players[next].takeBiggest();
         board.setCenter(bone);
-        return currentPlayer;
+        return next;
     }
 
     @Override
@@ -103,6 +104,7 @@ public class GameColombian extends Game {
 
     @Override
     protected int maxScore() {
-        return 100;
+        return 75;
+        //or return 100;
     }
 }

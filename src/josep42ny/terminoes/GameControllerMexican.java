@@ -1,22 +1,9 @@
 package josep42ny.terminoes;
 
-public class GameSpanish extends Game {
+public class GameMexican extends Game {
 
-    public GameSpanish(int players) {
+    public GameMexican(int players) {
         super(players);
-    }
-
-    @Override
-    protected int establishGameWinner() {
-        int winner = 0;
-        int[] teams = new int[teamAmount];
-        for (Player player : players) {
-            teams[player.getTeam()] += player.getScore();
-            if (teams[player.getTeam()] >= maxScore) {
-                winner = player.getTeam();
-            }
-        }
-        return winner;
     }
 
     @Override
@@ -26,27 +13,43 @@ public class GameSpanish extends Game {
 
     @Override
     protected int playNextRoundStarter() {
-        Bone bone;
+        int maxBoneValue = 0;
+        int maxBoneIndex = 0;
+        int playerIndex = 0;
 
-        int MAX_DOUBLE = 6;
-        for (int i = MAX_DOUBLE; i >= 0; i--) {
-            for (int index = 0; index < players.length; index++) {
-                if (players[index].hasBone(i, i)) {
-                    bone = players[index].takeBoneByValue(i, i);
-                    board.setCenter(bone);
-                    return index;
-                }
+        for (int i = 0; i < players.length; i++) {
+            Player curPlayer = players[i];
+            int handSize = curPlayer.getHand().size();
+            int randomBoneIndex = random.nextInt(handSize);
+            int randomBoneValue = curPlayer.getBone(randomBoneIndex).getValue();
+            if (randomBoneValue > maxBoneValue) {
+                maxBoneValue = randomBoneValue;
+                maxBoneIndex = randomBoneIndex;
+                playerIndex = i;
             }
         }
 
-        int randIndex = random.nextInt(players.length);
-        bone = players[randIndex].takeRandom(1).get(0);
+        Bone bone = players[playerIndex].takeBone(maxBoneIndex);
+        bone.setDirection(Direction.LF);
         board.setCenter(bone);
-        return randIndex;
+        return playerIndex;
     }
 
     @Override
-    protected void handleTanca() {
+    protected int establishGameWinner() {
+        int[] teams = new int[teamAmount];
+        int winner = 0;
+        for (Player player : players) {
+            teams[player.getTeam()] += player.getScore();
+            if (teams[player.getTeam()] >= maxScore()) {
+                winner = player.getTeam();
+            }
+        }
+        return winner;
+    }
+
+    @Override
+    protected void handleTranca() {
         int[] teamPoints = new int[teamAmount];
 
         // Count hand points per team
@@ -56,27 +59,27 @@ public class GameSpanish extends Game {
 
         // Find team with the lowest hand points
         int winningTeam = 0;
+        int totalPoints = 0;
         for (int team = 0; team < teamAmount; team++) {
+            totalPoints += teamPoints[team];
             if (teamPoints[team] < teamPoints[winningTeam]) {
                 winningTeam = team;
-            }
-        }
-
-        // Sum points of losing teams
-        int totalPoints = 0;
-        for (int i = 0; i < teamPoints.length; i++) {
-            if (i != winningTeam) {
-                totalPoints += teamPoints[i];
             }
         }
 
         for (Player player : players) {
             if (player.getTeam() == winningTeam) {
                 // Only one player on the winning team gets the points
+                totalPoints -= player.getHandPoints();
                 player.addScore(totalPoints);
                 return;
             }
         }
+    }
+
+    @Override
+    protected void handlePass() {
+
     }
 
     @Override
@@ -91,17 +94,13 @@ public class GameSpanish extends Game {
     }
 
     @Override
-    protected void handlePass() {
-
-    }
-
-    @Override
     protected boolean allowSinglePlayer() {
         return true;
     }
 
     @Override
     protected int maxScore() {
-        return 200;
+        return 300;
+        // or return 200;
     }
 }
