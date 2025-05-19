@@ -33,7 +33,7 @@ public class GameSpanish extends Game {
             for (int index = 0; index < players.length; index++) {
                 if (players[index].hasBone(i, i)) {
                     bone = players[index].takeBoneByValue(i, i);
-                    board.setCenter(bone);
+                    board = new Board(bone);
                     return index;
                 }
             }
@@ -41,7 +41,7 @@ public class GameSpanish extends Game {
 
         int randIndex = random.nextInt(players.length);
         bone = players[randIndex].takeRandom(1).get(0);
-        board.setCenter(bone);
+        board = new Board(bone);
         return randIndex;
     }
 

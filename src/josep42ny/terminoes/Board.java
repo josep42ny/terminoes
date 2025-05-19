@@ -7,33 +7,26 @@ import java.util.List;
 public class Board implements Serializable {
 
     private Bone center;
-    private final BoneList lfArm;
-    private final BoneList rgArm;
+    private final BoneList bones;
 
-    public Board() {
-        this.lfArm = new BoneList();
-        this.rgArm = new BoneList();
+    public Board(Bone center) {
+        this.bones = new BoneList(center);
     }
 
-    public void setCenter(Bone center) {
-        this.center = center;
-        this.lfArm.add(center);
-        this.rgArm.add(center);
+    public BoneList getBones() {
+        return bones;
     }
 
-    public BoneList getLfArm() {
-        return lfArm;
+    public void addLast(Bone bone) {
+        bones.addLast(bone);
     }
 
-    public BoneList getRgArm() {
-        return rgArm;
+    public void addFirst(Bone bone) {
+        bones.addFirst(bone);
     }
 
     public int[] getEnds() {
-        int lfEnd = lfArm.getEnd();
-        int rgEnd = rgArm.getEnd();
-
-        return new int[]{lfEnd, rgEnd};
+        return bones.getEndNumbers();
     }
 
     public int[] getPlayableIndexes(Bone bone) {
@@ -54,22 +47,20 @@ public class Board implements Serializable {
     public void highlight(int[] indexes) {
         for (int index : indexes) {
             switch (index) {
-                case 0 -> lfArm.get(-1).highlight();
-                case 1 -> rgArm.get(-1).highlight();
+                case 0 -> bones.highlight(0);
+                case 1 -> bones.highlight(bones.size() - 1);
             }
         }
     }
 
     public void unHighlightAll() {
-        center.unHighlight();
-        lfArm.unHighlightAll();
-        rgArm.unHighlightAll();
+        bones.unHighlightAll();
     }
 
     public void add(Bone bone, int target) {
         switch (target) {
-            case 0 -> lfArm.addOriented(bone);
-            case 1 -> rgArm.addOriented(bone);
+            case 0 -> bones.placeFirst(bone);
+            case 1 -> bones.placeLast(bone);
         }
 
     }

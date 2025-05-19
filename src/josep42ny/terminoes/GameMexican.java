@@ -31,7 +31,7 @@ public class GameMexican extends Game {
 
         Bone bone = players[playerIndex].takeBone(maxBoneIndex);
         bone.setDirection(Direction.LF);
-        board.setCenter(bone);
+        board = new Board(bone);
         return playerIndex;
     }
 

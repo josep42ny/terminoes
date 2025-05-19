@@ -1,8 +1,8 @@
 package josep42ny.terminoes;
 
-public class GameColombian extends Game {
+public class GameVenezuelan extends Game {
 
-    public GameColombian(int players) {
+    public GameVenezuelan(int players) {
         super(players);
     }
 
@@ -67,7 +67,7 @@ public class GameColombian extends Game {
             for (int index = 0; index < players.length; index++) {
                 if (players[index].hasBone(i, i)) {
                     bone = players[index].takeBoneByValue(i, i);
-                    board.setCenter(bone);
+                    board = new Board(bone);
                     return index;
                 }
             }
@@ -75,15 +75,16 @@ public class GameColombian extends Game {
 
         int randIndex = random.nextInt(players.length);
         bone = players[randIndex].takeRandom(1).get(0);
-        board.setCenter(bone);
+        board = new Board(bone);
         return randIndex;
     }
 
     @Override
     protected int playNextRoundStarter() {
-        Bone bone = players[currentPlayer].takeBiggest();
-        board.setCenter(bone);
-        return currentPlayer;
+        int next = ++currentPlayer % players.length;
+        Bone bone = players[next].takeBiggest();
+        board = new Board(bone);
+        return next;
     }
 
     @Override
@@ -103,6 +104,7 @@ public class GameColombian extends Game {
 
     @Override
     protected int maxScore() {
-        return 100;
+        return 75;
+        //or return 100;
     }
 }

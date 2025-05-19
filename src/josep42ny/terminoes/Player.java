@@ -73,7 +73,7 @@ public class Player implements Serializable {
         return hand.takeBoneByValue(lfValue, rgValue);
     }
 
-    public BoneList takeRandom(int amount) throws OutOfBones {
+    public BoneList takeRandom(int amount) {
         return hand.takeRandom(amount);
     }
 

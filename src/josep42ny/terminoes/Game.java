@@ -9,12 +9,11 @@ import josep42ny.terminoes.utilities.View;
 import java.io.Serializable;
 import java.util.Random;
 
-public abstract class GameController implements Serializable {
+public abstract class Game implements Serializable {
 
     private final GameDAO gameDAO;
     protected Random random;
     protected Player[] players;
-    protected BoneList boneyard;
     protected Board board;
     protected int teamAmount;
     protected int playerAmount;
@@ -23,13 +22,10 @@ public abstract class GameController implements Serializable {
     boolean firstRound = true;
     boolean firstPass = true;
 
-    protected GameController(int playerAmount) {
+    protected Game(int playerAmount) {
         this.gameDAO = new GameDAOFactory().create();
         this.maxScore = maxScore();
         this.random = new Random();
-        this.board = new Board();
-        this.boneyard = new BoneList();
-        this.boneyard.fill();
         this.players = new Player[4];
         this.playerAmount = playerAmount;
 
@@ -39,6 +35,10 @@ public abstract class GameController implements Serializable {
             this.teamAmount = 2;
         }
 
+        initPlayers();
+    }
+
+    private void initPlayers() {
         int current = 0;
         int playersInTeam = playerAmount / teamAmount;
         for (int player = 0; player < playersInTeam; player++) {
@@ -47,7 +47,15 @@ public abstract class GameController implements Serializable {
                 current++;
             }
         }
+    }
 
+    private void initPlayerHands() {
+        int BONES_PER_PLAYER = 28 / players.length;
+        BoneList boneyard = new BoneList();
+        boneyard.fill();
+        for (Player player : players) {
+            player.setHand(boneyard.takeRandom(BONES_PER_PLAYER));
+        }
     }
 
     public void startGame() {
@@ -65,7 +73,7 @@ public abstract class GameController implements Serializable {
 
     public void gameLoop() {
         while (true) {
-            distributeBones();
+            initPlayerHands();
             if (firstRound) {
                 currentPlayer = playFirstRoundStarter();
                 firstRound = false;
@@ -157,13 +165,6 @@ public abstract class GameController implements Serializable {
 
     private void nextPlayer() {
         currentPlayer = ++currentPlayer % players.length;
-    }
-
-    private void distributeBones() {
-        int BONES_PER_PLAYER = 28 / players.length;
-        for (Player player : players) {
-            player.setHand(boneyard.takeRandom(BONES_PER_PLAYER));
-        }
     }
 
     private boolean maxScoreReached() {

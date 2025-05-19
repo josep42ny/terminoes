@@ -31,15 +31,11 @@ public class BoneList implements Serializable {
         return bones.remove(index);
     }
 
-    public BoneList takeRandom(int amount) throws OutOfBones {
-        if (bones.isEmpty()) {
-            throw new OutOfBones("tried getting bones from an empty list");
-        }
-
+    public BoneList takeRandom(int amount) {
         BoneList out = new BoneList();
 
         for (int i = 0; i < amount; i++) {
-            out.add(this.take(random.nextInt(this.size())));
+            out.addLast(this.take(random.nextInt(this.size())));
         }
 
         return out;
@@ -53,8 +49,17 @@ public class BoneList implements Serializable {
         return index >= 0 ? bones.get(index) : bones.get(bones.size() + index);
     }
 
-    public int getEnd() {
+    public int getEndNumber() {
         Bone end = bones.getLast();
+        if (end.getDirection() == Direction.RG) {
+            return end.getLf();
+        } else {
+            return end.getRg();
+        }
+    }
+
+    public int getStartNumber() {
+        Bone end = bones.getFirst();
         if (end.getDirection() == Direction.LF) {
             return end.getLf();
         } else {
@@ -62,14 +67,46 @@ public class BoneList implements Serializable {
         }
     }
 
-    public void add(Bone bone) {
-        bones.add(bone);
+    public int[] getEndNumbers() {
+        return new int[]{getStartNumber(), getEndNumber()};
     }
 
-    public void addOriented(Bone bone) {
+    public void addLast(Bone bone) {
+        bones.addLast(bone);
+    }
+
+    public void addFirst(Bone bone) {
+        bones.addFirst(bone);
+    }
+
+    public Bone takeLast() {
+        return bones.removeLast();
+    }
+
+    public Bone takeFirst() {
+        return bones.removeFirst();
+    }
+
+    public void placeLast(Bone bone) {
         int lf = bone.getLf();
         int rg = bone.getRg();
-        int end = this.getEnd();
+        int end = getEndNumber();
+
+        if (lf == rg && rg == end) {
+            bone.setDirection(Direction.UP);
+        } else if (lf == end) {
+            bone.setDirection(Direction.LF);
+        } else if (rg == end) {
+            bone.setDirection(Direction.RG);
+        }
+
+        bones.addLast(bone);
+    }
+
+    public void placeFirst(Bone bone) {
+        int lf = bone.getLf();
+        int rg = bone.getRg();
+        int end = getStartNumber();
 
         if (lf == rg && rg == end) {
             bone.setDirection(Direction.UP);
@@ -79,7 +116,7 @@ public class BoneList implements Serializable {
             bone.setDirection(Direction.LF);
         }
 
-        bones.add(bone);
+        bones.addFirst(bone);
     }
 
     public int[] getPlayableIndexes(int[] targets) {
@@ -116,7 +153,7 @@ public class BoneList implements Serializable {
         return bones.remove(match);
     }
 
-    public void highlight(int[] indexes) {
+    public void highlight(int... indexes) {
         for (int index : indexes) {
             bones.get(index).highlight();
         }

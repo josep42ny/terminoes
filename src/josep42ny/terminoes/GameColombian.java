@@ -1,48 +1,54 @@
 package josep42ny.terminoes;
 
-public class GameChilean extends Game {
+public class GameColombian extends Game {
 
-    public GameChilean(int players) {
+    public GameColombian(int players) {
         super(players);
     }
 
     @Override
     protected int establishGameWinner() {
+        int winner = 0;
         int[] teams = new int[teamAmount];
         for (Player player : players) {
             teams[player.getTeam()] += player.getScore();
-        }
-
-        int winner = 0;
-        for (int i = 1; i < teams.length; i++) {
-            if (teams[i] < teams[winner]) {
-                winner = i;
+            if (teams[player.getTeam()] >= maxScore) {
+                winner = player.getTeam();
             }
         }
-
         return winner;
     }
 
     @Override
     protected void handleTranca() {
-        int[] teams = new int[teamAmount];
+        int[] teamPoints = new int[teamAmount];
 
-        int totalPoints = 0;
+        // Count hand points per team
         for (Player player : players) {
-            totalPoints += player.getScore();
-            teams[player.getTeam()] += player.getScore();
+            teamPoints[player.getTeam()] += player.getHandPoints();
         }
 
-        int loser = 0;
-        for (int i = 1; i < teams.length; i++) {
-            if (teams[i] > teams[loser]) {
-                loser = i;
+        // Find team with the lowest hand points
+        int winningTeam = 0;
+        for (int team = 0; team < teamAmount; team++) {
+            if (teamPoints[team] < teamPoints[winningTeam]) {
+                winningTeam = team;
+            }
+        }
+
+        // Sum points of losing teams
+        int totalPoints = 0;
+        for (int i = 0; i < teamPoints.length; i++) {
+            if (i != winningTeam) {
+                totalPoints += teamPoints[i];
             }
         }
 
         for (Player player : players) {
-            if (player.getTeam() == loser) {
+            if (player.getTeam() == winningTeam) {
+                // Only one player on the winning team gets the points
                 player.addScore(totalPoints);
+                return;
             }
         }
     }
@@ -61,7 +67,7 @@ public class GameChilean extends Game {
             for (int index = 0; index < players.length; index++) {
                 if (players[index].hasBone(i, i)) {
                     bone = players[index].takeBoneByValue(i, i);
-                    board.setCenter(bone);
+                    board = new Board(bone);
                     return index;
                 }
             }
@@ -69,32 +75,34 @@ public class GameChilean extends Game {
 
         int randIndex = random.nextInt(players.length);
         bone = players[randIndex].takeRandom(1).get(0);
-        board.setCenter(bone);
+        board = new Board(bone);
         return randIndex;
     }
 
     @Override
     protected int playNextRoundStarter() {
-        int next = ++currentPlayer % players.length;
-        Bone bone = players[next].takeBiggest();
-        board.setCenter(bone);
-        return next;
+        Bone bone = players[currentPlayer].takeBiggest();
+        board = new Board(bone);
+        return currentPlayer;
     }
 
     @Override
     protected void handleRoundWinner() {
+        int winnerTeam = players[currentPlayer].getTeam();
         for (Player player : players) {
-            player.addScore(player.getHandPoints());
+            if (player.getTeam() != winnerTeam) {
+                players[currentPlayer].addScore(player.getHandPoints());
+            }
         }
     }
 
     @Override
     protected boolean allowSinglePlayer() {
-        return true;
+        return false;
     }
 
     @Override
     protected int maxScore() {
-        return 121;
+        return 100;
     }
 }

@@ -1,53 +1,55 @@
 package josep42ny.terminoes;
 
-public class GamePonce extends Game {
+public class GameChilean extends Game {
 
-    public GamePonce(int players) {
+    public GameChilean(int players) {
         super(players);
     }
 
     @Override
     protected int establishGameWinner() {
-        int winner = 0;
         int[] teams = new int[teamAmount];
         for (Player player : players) {
             teams[player.getTeam()] += player.getScore();
-            if (teams[player.getTeam()] >= maxScore) {
-                winner = player.getTeam();
+        }
+
+        int winner = 0;
+        for (int i = 1; i < teams.length; i++) {
+            if (teams[i] < teams[winner]) {
+                winner = i;
             }
         }
+
         return winner;
     }
 
     @Override
     protected void handleTranca() {
-        players[currentPlayer].addScore(2);
+        int[] teams = new int[teamAmount];
 
-        int min = 0;
-        int total = players[min].getScore();
-        for (int i = 1; i < players.length; i++) {
-            total += players[i].getScore();
-            if (players[i].getScore() < players[min].getScore()) {
-                min = i;
+        int totalPoints = 0;
+        for (Player player : players) {
+            totalPoints += player.getScore();
+            teams[player.getTeam()] += player.getScore();
+        }
+
+        int loser = 0;
+        for (int i = 1; i < teams.length; i++) {
+            if (teams[i] > teams[loser]) {
+                loser = i;
             }
         }
-        players[min].addScore(total);
 
         for (Player player : players) {
-            int rounded = (int) (Math.round(player.getScore() / 10.0) * 10);
-            player.setScore(rounded);
+            if (player.getTeam() == loser) {
+                player.addScore(totalPoints);
+            }
         }
     }
 
     @Override
     protected void handlePass() {
-        int previous = --currentPlayer % players.length;
-        if (firstPass) {
-            players[previous].addScore(2);
-            firstPass = false;
-        } else {
-            players[previous].addScore(1);
-        }
+
     }
 
     @Override
@@ -59,7 +61,7 @@ public class GamePonce extends Game {
             for (int index = 0; index < players.length; index++) {
                 if (players[index].hasBone(i, i)) {
                     bone = players[index].takeBoneByValue(i, i);
-                    board.setCenter(bone);
+                    board = new Board(bone);
                     return index;
                 }
             }
@@ -67,7 +69,7 @@ public class GamePonce extends Game {
 
         int randIndex = random.nextInt(players.length);
         bone = players[randIndex].takeRandom(1).get(0);
-        board.setCenter(bone);
+        board = new Board(bone);
         return randIndex;
     }
 
@@ -75,25 +77,24 @@ public class GamePonce extends Game {
     protected int playNextRoundStarter() {
         int next = ++currentPlayer % players.length;
         Bone bone = players[next].takeBiggest();
-        board.setCenter(bone);
+        board = new Board(bone);
         return next;
     }
 
     @Override
     protected void handleRoundWinner() {
         for (Player player : players) {
-            int rounded = (int) (Math.round(player.getScore() / 10.0) * 10);
-            player.setScore(rounded);
+            player.addScore(player.getHandPoints());
         }
     }
 
     @Override
     protected boolean allowSinglePlayer() {
-        return false;
+        return true;
     }
 
     @Override
     protected int maxScore() {
-        return 20;
+        return 121;
     }
 }

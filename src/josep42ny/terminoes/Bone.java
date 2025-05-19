@@ -51,8 +51,8 @@ public class Bone implements Serializable {
         switch (direction) {
             case UP -> out = isHighlighted() ? vPartsHighlighted(lf, rg) : vParts(lf, rg);
             case DW -> out = isHighlighted() ? vPartsHighlighted(rg, lf) : vParts(rg, lf);
-            case RG -> out = isHighlighted() ? hPartsHighlighted(lf, rg) : hParts(lf, rg);
-            case LF -> out = isHighlighted() ? hPartsHighlighted(rg, lf) : hParts(rg, lf);
+            case RG -> out = isHighlighted() ? hPartsHighlighted(rg, lf) : hParts(rg, lf);
+            case LF -> out = isHighlighted() ? hPartsHighlighted(lf, rg) : hParts(lf, rg);
             default -> out = new String[]{};
         }
         return out;
