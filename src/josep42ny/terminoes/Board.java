@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Board implements Serializable {
 
-    private Bone center;
     private final BoneList bones;
 
     public Board(Bone center) {
@@ -15,14 +14,6 @@ public class Board implements Serializable {
 
     public BoneList getBones() {
         return bones;
-    }
-
-    public void addLast(Bone bone) {
-        bones.addLast(bone);
-    }
-
-    public void addFirst(Bone bone) {
-        bones.addFirst(bone);
     }
 
     public int[] getEnds() {

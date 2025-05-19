@@ -2,8 +2,8 @@ package josep42ny.terminoes;
 
 public class GamePonce extends Game {
 
-    public GamePonce(int players) {
-        super(players);
+    public GamePonce(int gameType) {
+        super(gameType);
     }
 
     @Override
@@ -12,7 +12,7 @@ public class GamePonce extends Game {
         int[] teams = new int[teamAmount];
         for (Player player : players) {
             teams[player.getTeam()] += player.getScore();
-            if (teams[player.getTeam()] >= maxScore) {
+            if (teams[player.getTeam()] >= MAX_SCORE) {
                 winner = player.getTeam();
             }
         }
@@ -20,8 +20,8 @@ public class GamePonce extends Game {
     }
 
     @Override
-    protected void handleTranca() {
-        players[currentPlayer].addScore(2);
+    protected void handleTranca(Player trancaResponsible) {
+        trancaResponsible.addScore(2);
 
         int min = 0;
         int total = players[min].getScore();
@@ -40,18 +40,18 @@ public class GamePonce extends Game {
     }
 
     @Override
-    protected void handlePass() {
-        int previous = --currentPlayer % players.length;
+    protected void handlePass(int currentPlayerIndex) {
+        int previousPlayerIndex = --currentPlayerIndex % players.length;
         if (firstPass) {
-            players[previous].addScore(2);
+            players[previousPlayerIndex].addScore(2);
             firstPass = false;
         } else {
-            players[previous].addScore(1);
+            players[previousPlayerIndex].addScore(1);
         }
     }
 
     @Override
-    protected int playFirstRoundStarter() {
+    protected int getFirstRoundStartingPlayer() {
         Bone bone;
 
         int MAX_DOUBLE = 6;
@@ -72,15 +72,15 @@ public class GamePonce extends Game {
     }
 
     @Override
-    protected int playNextRoundStarter() {
-        int next = ++currentPlayer % players.length;
-        Bone bone = players[next].takeBiggest();
+    protected int getNormalRoundStartingPlayer(int previousWinnerIndex) {
+        int startingPlayerIndex = getNextPlayerOf(previousWinnerIndex);
+        Bone bone = players[startingPlayerIndex].takeBiggest();
         board = new Board(bone);
-        return next;
+        return startingPlayerIndex;
     }
 
     @Override
-    protected void handleRoundWinner() {
+    protected void scoreRoundWinner(Player winner) {
         for (Player player : players) {
             int rounded = (int) (Math.round(player.getScore() / 10.0) * 10);
             player.setScore(rounded);

@@ -1,15 +1,13 @@
 package josep42ny.terminoes.utilities;
 
 import josep42ny.terminoes.*;
-import josep42ny.terminoes.Game;
 
 import java.util.Map;
 
 public class View {
 
-    private static final String empty = "           ";
-
-    public static void drawHand(BoneList bones) {
+    public static void drawHand(Player player) {
+        BoneList bones = player.getHand();
         if (bones.isEmpty()) return;
         boolean[] highlights = new boolean[bones.size()];
 
@@ -34,106 +32,34 @@ public class View {
         System.out.println(indexes);
     }
 
-    public static void drawHand(Player player) {
-        drawHand(player.getHand());
-    }
-
     public static void drawBoard(Board board) {
-//        List<Bone[]> partsLf = new ArrayList<>(6);
-//
-//        BoneList lf = board.getLfArm();
-//        int height = (lf.size() + 2) / 7;
-//        int s = 3;
-//        int index = 0;
-//
-//        for (int i = 0; i <= height; i++) {
-//
-//            Bone[] part = new Bone[7];
-//
-//            for (int j = s; j < part.length; j++) {
-//                if (index >= lf.size()) {
-//                    part[j] = null;
-//                } else {
-//                    part[j] = lf.get(index++);
-//                }
-//                s = 0;
-//            }
-//
-//            partsLf.add(part);
-//        }
-//
-//        for (Bone[] part : partsLf.reversed()) {
-//            tempHelper(new BoneList(part), 1);
-//        }
-//
-//        List<Bone[]> partsRg = new ArrayList<>(6);
-//        BoneList rg = board.getRgArm();
-//        int heightrg = (rg.size() + 2) / 7;
-//        int d = 3;
-//        int indexrg = 0;
-//
-//        for (int i = 0; i <= heightrg; i++) {
-//
-//            Bone[] part = new Bone[7];
-//
-//            for (int j = d; j < part.length; j++) {
-//                if (indexrg >= rg.size()) {
-//                    part[j] = null;
-//                } else {
-//                    part[j] = rg.get(indexrg++);
-//                }
-//                d = 0;
-//            }
-//
-//            partsRg.add(part);
-//        }
-//
-//        for (Bone[] part : partsRg.reversed()) {
-//            tempHelper(new BoneList(part), 1);
-//        }
-
-//        BoneList lf = board.getLfArm();
-//        int height = (lf.size() + 2) / 7;
-//        System.out.println(height);
-//
-//        Bone[][] outer = new Bone[height + 1][7];
-//        for (int i = height; i >= 0; i--) {
-//            System.out.println(7 % ((i * 7) + 3));
-//            //for (int j = 0; j < ; j++) {
-//            //outer[i][j] =
-//            //}
-//        }
-
-        drawHand(board.getBones());
-    }
-
-    public static void tempHelper(BoneList bones, int index) {
+        BoneList bones = board.getBones();
         if (bones.isEmpty()) return;
-        boolean[] highlights = new boolean[bones.size()];
-        int PART_AMOUNT = 5;
-        for (int i = 0; i < PART_AMOUNT; i++) {
+
+        for (int i = 0; i < bones.get(0).getParts().length; i++) {
             for (int j = 0; j < bones.size(); j++) {
-                if (bones.get(j) == null) {
-                    System.out.print("...........");
-                } else {
-                    System.out.print(bones.get(j).getParts()[i]);
-                    if (bones.get(j).isHighlighted()) {
-                        highlights[j] = true;
-                    }
-                }
+                System.out.print(bones.get(j).getParts()[i]);
             }
             System.out.println();
         }
 
         StringBuilder indexes = new StringBuilder();
-        for (boolean highlighted : highlights) {
-            if (highlighted) {
-                indexes.append("     ").append(index).append("     ");
+        for (int i = 0; i < bones.size(); i++) {
+            if (i == 0 && bones.get(i).isHighlighted()) {
+                indexes.append("     ").append(0).append("     ");
+            } else if (i == bones.size() - 1 && bones.get(i).isHighlighted()) {
+                indexes.append("     ").append(1).append("     ");
             } else {
                 indexes.append("           ");
             }
         }
         System.out.println(indexes);
+    }
+
+    public static void drawPlayerInfo(Player player) {
+        String score = String.format("%03d", player.getScore()) + " punts";
+        String team = "Equip " + player.getTeam();
+        System.out.println("============================ " + team + " - " + score + " ============================\n");
     }
 
     public static void homeScreen() {

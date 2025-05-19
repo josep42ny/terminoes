@@ -3,10 +3,8 @@ package josep42ny.terminoes.utilities;
 public enum Color {
 
     RESET("\033[m"),
-    RED("\033[101m"),
     BG_WHITE("\033[107m"),
     FG_WHITE("\033[97m"),
-    BG_BLACK("\033[40m"),
     FG_BLACK("\033[30m"),
     SHADOW("\033[102m");
 

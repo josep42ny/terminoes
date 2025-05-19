@@ -2,8 +2,8 @@ package josep42ny.terminoes;
 
 public class GameSpanish extends Game {
 
-    public GameSpanish(int players) {
-        super(players);
+    public GameSpanish(int gameType) {
+        super(gameType);
     }
 
     @Override
@@ -12,7 +12,7 @@ public class GameSpanish extends Game {
         int[] teams = new int[teamAmount];
         for (Player player : players) {
             teams[player.getTeam()] += player.getScore();
-            if (teams[player.getTeam()] >= maxScore) {
+            if (teams[player.getTeam()] >= MAX_SCORE) {
                 winner = player.getTeam();
             }
         }
@@ -20,12 +20,12 @@ public class GameSpanish extends Game {
     }
 
     @Override
-    protected int playFirstRoundStarter() {
-        return playNextRoundStarter();
+    protected int getFirstRoundStartingPlayer() {
+        return getNormalRoundStartingPlayer(-1);
     }
 
     @Override
-    protected int playNextRoundStarter() {
+    protected int getNormalRoundStartingPlayer(int previousWinnerIndex) {
         Bone bone;
 
         int MAX_DOUBLE = 6;
@@ -46,7 +46,7 @@ public class GameSpanish extends Game {
     }
 
     @Override
-    protected void handleTranca() {
+    protected void handleTranca(Player trancaResponsible) {
         int[] teamPoints = new int[teamAmount];
 
         // Count hand points per team
@@ -80,8 +80,7 @@ public class GameSpanish extends Game {
     }
 
     @Override
-    protected void handleRoundWinner() {
-        Player winner = players[currentPlayer];
+    protected void scoreRoundWinner(Player winner) {
         int roundPoints = 0;
         for (Player player : players) {
             roundPoints += player.getHandPoints();
@@ -91,7 +90,7 @@ public class GameSpanish extends Game {
     }
 
     @Override
-    protected void handlePass() {
+    protected void handlePass(int currentPlayerIndex) {
 
     }
 

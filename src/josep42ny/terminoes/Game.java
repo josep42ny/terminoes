@@ -12,41 +12,47 @@ import java.util.Random;
 public abstract class Game implements Serializable {
 
     private final GameDAO gameDAO;
-    protected Random random;
-    protected Player[] players;
+    protected final Random random;
+    protected final Player[] players;
+    private final int GAME_TYPE;
+    protected final int MAX_SCORE;
     protected Board board;
     protected int teamAmount;
-    protected int playerAmount;
-    protected int maxScore;
-    protected int currentPlayer;
+
+    // persistence
     boolean firstRound = true;
     boolean firstPass = true;
+    int savedPlayerIndex = 0;
 
-    protected Game(int playerAmount) {
+    protected Game(int gameType) {
+        this.GAME_TYPE = gameType;
         this.gameDAO = new GameDAOFactory().create();
-        this.maxScore = maxScore();
+        this.MAX_SCORE = maxScore();
         this.random = new Random();
-        this.players = new Player[4];
-        this.playerAmount = playerAmount;
-
-        if (allowSinglePlayer() && InputHandler.askBoolean("Vols jugar individualment [y/n]?")) {
-            this.teamAmount = playerAmount;
-        } else {
-            this.teamAmount = 2;
-        }
-
-        initPlayers();
+        this.players = initPlayers();
     }
 
-    private void initPlayers() {
+    private Player[] initPlayers() {
+        int PLAYER_AMOUNT = 4;
+        int COUPLE_AMOUNT = PLAYER_AMOUNT / 2;
+
+        if (allowSinglePlayer() && InputHandler.askBoolean("Vols jugar individualment [y/n]?")) {
+            this.teamAmount = PLAYER_AMOUNT;
+        } else {
+            this.teamAmount = COUPLE_AMOUNT;
+        }
+
         int current = 0;
-        int playersInTeam = playerAmount / teamAmount;
+        int playersInTeam = PLAYER_AMOUNT / teamAmount;
+        Player[] out = new Player[PLAYER_AMOUNT];
         for (int player = 0; player < playersInTeam; player++) {
             for (int teamIndex = 0; teamIndex < teamAmount; teamIndex++) {
-                players[current] = new Player(teamIndex);
+                out[current] = new Player(teamIndex);
                 current++;
             }
         }
+
+        return out;
     }
 
     private void initPlayerHands() {
@@ -63,7 +69,7 @@ public abstract class Game implements Serializable {
     }
 
     public void resumeGame() {
-        playRound();
+        playRound(savedPlayerIndex);
         if (maxScoreReached()) {
             View.displayWinner(establishGameWinner());
             return;
@@ -72,16 +78,17 @@ public abstract class Game implements Serializable {
     }
 
     public void gameLoop() {
+        int previousWinnerIndex = -1;
         while (true) {
+            int openingPlayer;
             initPlayerHands();
             if (firstRound) {
-                currentPlayer = playFirstRoundStarter();
+                openingPlayer = getFirstRoundStartingPlayer();
                 firstRound = false;
             } else {
-                currentPlayer = playNextRoundStarter();
+                openingPlayer = getNormalRoundStartingPlayer(previousWinnerIndex);
             }
-            nextPlayer();
-            playRound();
+            playRound(openingPlayer);
             if (maxScoreReached()) {
                 View.displayWinner(establishGameWinner());
                 return;
@@ -89,62 +96,56 @@ public abstract class Game implements Serializable {
         }
     }
 
-    public final void playRound() {
+    public final void playRound(int openingPlayer) {
+        int playerIndex = openingPlayer;
         while (true) {
-            Player player = players[currentPlayer];
+            playerIndex = getNextPlayerOf(playerIndex);
+            Player player = players[playerIndex];
             int[] boardEnds = board.getEnds();
 
-            View.drawBoard(board);
-            View.drawHand(player);
-
+            updateScreen(player);
             if (!player.canPlay(boardEnds)) {
-                handlePass();
-                playerSwap();
+                handlePass(playerIndex);
+                playerSwap(playerIndex);
                 continue;
             }
 
-            //
-            Ansi.clearScreen();
+            int[] playerConstraints = player.getPlayableIndexes(boardEnds);
+            player.highlight(playerConstraints);
+            updateScreen(player);
 
-            int[] handConstraints = player.getPlayableIndexes(boardEnds);
-
-            player.highlight(handConstraints);
-            View.drawBoard(board);
-            View.drawHand(player);
-
-            int handIndex = InputHandler.askConstrainedInt(handConstraints, "Selecciona una peça: ");
+            int handIndex = InputHandler.askConstrainedInt(playerConstraints, "Selecciona una peça: ");
             player.unHighlightAll();
 
-            //
-            Ansi.clearScreen();
-
             int[] boardConstraints = board.getPlayableIndexes(player.getBone(handIndex));
-
             board.highlight(boardConstraints);
-            View.drawBoard(board);
-            View.drawHand(player);
+            updateScreen(player);
 
             int boardIndex = InputHandler.askConstrainedInt(boardConstraints, "Selecciona una peça: ");
             board.unHighlightAll();
 
-            //
             board.add(player.takeBone(handIndex), boardIndex);
-            Ansi.clearScreen();
-            View.drawBoard(board);
-            View.drawHand(player);
+            updateScreen(player);
 
             if (noOneCanPlay()) {
-                handleTranca();
+                handleTranca(player);
                 return;
             }
 
             if (player.getHand().isEmpty()) {
-                handleRoundWinner();
+                scoreRoundWinner(player);
                 return;
             }
 
-            playerSwap();
+            playerSwap(playerIndex);
         }
+    }
+
+    private void updateScreen(Player player) {
+        Ansi.clearScreen();
+        View.drawBoard(board);
+        View.drawPlayerInfo(player);
+        View.drawHand(player);
     }
 
     private boolean noOneCanPlay() {
@@ -156,22 +157,22 @@ public abstract class Game implements Serializable {
         return true;
     }
 
-    private void playerSwap() {
+    private void playerSwap(int currentPlayer) {
         InputHandler.waitKeyPress();
         InputHandler.waitPlayerSwap();
-        nextPlayer();
-        gameDAO.saveAll(this, 0);
+        gameDAO.saveAll(this, GAME_TYPE);
+        savedPlayerIndex = currentPlayer;
     }
 
-    private void nextPlayer() {
-        currentPlayer = ++currentPlayer % players.length;
+    protected int getNextPlayerOf(int playerIndex) {
+        return ++playerIndex % players.length;
     }
 
     private boolean maxScoreReached() {
         int[] teams = new int[teamAmount];
         for (Player player : players) {
             teams[player.getTeam()] += player.getScore();
-            if (teams[player.getTeam()] >= maxScore) {
+            if (teams[player.getTeam()] >= MAX_SCORE) {
                 return true;
             }
         }
@@ -180,16 +181,15 @@ public abstract class Game implements Serializable {
 
     protected abstract int establishGameWinner();
 
-    protected abstract void handleTranca();
+    protected abstract void handleTranca(Player trancaResponsible);
 
-    protected abstract void handlePass();
+    protected abstract void handlePass(int currentPlayerIndex);
 
-    protected abstract void handleRoundWinner();
+    protected abstract void scoreRoundWinner(Player winner);
 
-    // returns the index of the player the bone is taken from
-    protected abstract int playNextRoundStarter();
+    protected abstract int getFirstRoundStartingPlayer();
 
-    protected abstract int playFirstRoundStarter();
+    protected abstract int getNormalRoundStartingPlayer(int previousWinnerIndex);
 
     protected abstract boolean allowSinglePlayer();
 

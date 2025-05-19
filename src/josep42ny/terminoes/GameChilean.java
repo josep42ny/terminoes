@@ -2,8 +2,8 @@ package josep42ny.terminoes;
 
 public class GameChilean extends Game {
 
-    public GameChilean(int players) {
-        super(players);
+    public GameChilean(int gameType) {
+        super(gameType);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class GameChilean extends Game {
     }
 
     @Override
-    protected void handleTranca() {
+    protected void handleTranca(Player trancaResponsible) {
         int[] teams = new int[teamAmount];
 
         int totalPoints = 0;
@@ -48,12 +48,12 @@ public class GameChilean extends Game {
     }
 
     @Override
-    protected void handlePass() {
+    protected void handlePass(int currentPlayerIndex) {
 
     }
 
     @Override
-    protected int playFirstRoundStarter() {
+    protected int getFirstRoundStartingPlayer() {
         Bone bone;
 
         int MAX_DOUBLE = 6;
@@ -74,15 +74,15 @@ public class GameChilean extends Game {
     }
 
     @Override
-    protected int playNextRoundStarter() {
-        int next = ++currentPlayer % players.length;
-        Bone bone = players[next].takeBiggest();
+    protected int getNormalRoundStartingPlayer(int previousWinnerIndex) {
+        int startingPlayerIndex = getNextPlayerOf(previousWinnerIndex);
+        Bone bone = players[startingPlayerIndex].takeBiggest();
         board = new Board(bone);
-        return next;
+        return startingPlayerIndex;
     }
 
     @Override
-    protected void handleRoundWinner() {
+    protected void scoreRoundWinner(Player winner) {
         for (Player player : players) {
             player.addScore(player.getHandPoints());
         }

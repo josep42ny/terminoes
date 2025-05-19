@@ -2,8 +2,8 @@ package josep42ny.terminoes;
 
 public class GameVenezuelan extends Game {
 
-    public GameVenezuelan(int players) {
-        super(players);
+    public GameVenezuelan(int gameType) {
+        super(gameType);
     }
 
     @Override
@@ -12,7 +12,7 @@ public class GameVenezuelan extends Game {
         int[] teams = new int[teamAmount];
         for (Player player : players) {
             teams[player.getTeam()] += player.getScore();
-            if (teams[player.getTeam()] >= maxScore) {
+            if (teams[player.getTeam()] >= MAX_SCORE) {
                 winner = player.getTeam();
             }
         }
@@ -20,7 +20,7 @@ public class GameVenezuelan extends Game {
     }
 
     @Override
-    protected void handleTranca() {
+    protected void handleTranca(Player trancaResponsible) {
         int[] teamPoints = new int[teamAmount];
 
         // Count hand points per team
@@ -54,12 +54,12 @@ public class GameVenezuelan extends Game {
     }
 
     @Override
-    protected void handlePass() {
+    protected void handlePass(int currentPlayerIndex) {
 
     }
 
     @Override
-    protected int playFirstRoundStarter() {
+    protected int getFirstRoundStartingPlayer() {
         Bone bone;
 
         int MAX_DOUBLE = 6;
@@ -80,19 +80,19 @@ public class GameVenezuelan extends Game {
     }
 
     @Override
-    protected int playNextRoundStarter() {
-        int next = ++currentPlayer % players.length;
-        Bone bone = players[next].takeBiggest();
+    protected int getNormalRoundStartingPlayer(int previousWinnerIndex) {
+        int startingPlayerIndex = getNextPlayerOf(previousWinnerIndex);
+        Bone bone = players[startingPlayerIndex].takeBiggest();
         board = new Board(bone);
-        return next;
+        return startingPlayerIndex;
     }
 
     @Override
-    protected void handleRoundWinner() {
-        int winnerTeam = players[currentPlayer].getTeam();
+    protected void scoreRoundWinner(Player winner) {
+        int winnerTeam = winner.getTeam();
         for (Player player : players) {
             if (player.getTeam() != winnerTeam) {
-                players[currentPlayer].addScore(player.getHandPoints());
+                winner.addScore(player.getHandPoints());
             }
         }
     }

@@ -40,16 +40,18 @@ public class GameLoader {
         } else {
             View.drawNewGames();
             int selection = InputHandler.askConstrainedInt(GAME_INDEXES, "Selecciona un mode [0-6]: ");
+
             Game game = switch (selection) {
-                case 0 -> new GameSpanish(4);
-                case 1 -> new GameMexican(4);
-                case 2 -> new GameLatino(4);
-                case 3 -> new GameColombian(4);
+                case 0 -> new GameSpanish(0);
+                case 1 -> new GameMexican(1);
+                case 2 -> new GameLatino(2);
+                case 3 -> new GameColombian(3);
                 case 4 -> new GameChilean(4);
-                case 5 -> new GameVenezuelan(4);
-                case 6 -> new GamePonce(4);
+                case 5 -> new GameVenezuelan(5);
+                case 6 -> new GamePonce(6);
                 default -> throw new IllegalStateException("Unexpected value: " + selection);
             };
+
             Ansi.clearScreen();
             game.startGame();
         }

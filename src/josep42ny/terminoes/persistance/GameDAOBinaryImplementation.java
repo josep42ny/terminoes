@@ -51,7 +51,11 @@ public class GameDAOBinaryImplementation implements GameDAO, Serializable {
 
     @Override
     public void delete(String saveName) {
-        File file = new File(saveName);
-        file.delete();
+        File save = new File(saveName);
+        if (save.delete()) {
+            System.out.println("Deleted the file: " + save.getName());
+        } else {
+            System.out.println("Failed to delete the file: " + save.getName());
+        }
     }
 }

@@ -75,18 +75,6 @@ public class BoneList implements Serializable {
         bones.addLast(bone);
     }
 
-    public void addFirst(Bone bone) {
-        bones.addFirst(bone);
-    }
-
-    public Bone takeLast() {
-        return bones.removeLast();
-    }
-
-    public Bone takeFirst() {
-        return bones.removeFirst();
-    }
-
     public void placeLast(Bone bone) {
         int lf = bone.getLf();
         int rg = bone.getRg();
