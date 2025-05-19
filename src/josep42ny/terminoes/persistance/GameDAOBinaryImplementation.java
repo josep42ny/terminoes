@@ -23,7 +23,7 @@ public class GameDAOBinaryImplementation implements GameDAO, Serializable {
             oos.close();
             fos.close();
         } catch (IOException e) {
-            throw new DAOException("Error finding employee resource", e);
+            throw new DAOException("Error saving the game to file: " + SAVE_PATHS[gameType], e);
         }
     }
 

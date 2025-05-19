@@ -20,6 +20,7 @@ public class GameLoader {
     }
 
     public void awake() {
+        View.homeScreen();
         Map<String, Game> savedGames = gameDAO.loadAll();
         boolean shouldLoadSavedGame = hasSavedGames(savedGames) && InputHandler.askLoad();
         View.homeScreen();

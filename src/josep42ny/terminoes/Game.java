@@ -29,38 +29,39 @@ public abstract class Game implements Serializable {
         this.gameDAO = new GameDAOFactory().create();
         this.MAX_SCORE = maxScore();
         this.random = new Random();
-        this.players = initPlayers();
+        this.players = initializePlayers();
     }
 
-    private Player[] initPlayers() {
+    private Player[] initializePlayers() {
         int PLAYER_AMOUNT = 4;
-        int COUPLE_AMOUNT = PLAYER_AMOUNT / 2;
+        int COUPLE_AMOUNT = 2;
+        boolean isSinglePlayer = allowSinglePlayer() && InputHandler.askBoolean("Vols jugar individualment [y/n]?");
 
-        if (allowSinglePlayer() && InputHandler.askBoolean("Vols jugar individualment [y/n]?")) {
-            this.teamAmount = PLAYER_AMOUNT;
-        } else {
-            this.teamAmount = COUPLE_AMOUNT;
-        }
+        this.teamAmount = isSinglePlayer ? PLAYER_AMOUNT : PLAYER_AMOUNT / COUPLE_AMOUNT;
 
+        int playersPerTeam = PLAYER_AMOUNT / teamAmount; // Clearer logic
+        Player[] playerArray = new Player[PLAYER_AMOUNT];
+
+        fillPlayers(playerArray, playersPerTeam);
+        return playerArray;
+    }
+
+    private void fillPlayers(Player[] playerArray, int playersPerTeam) {
         int current = 0;
-        int playersInTeam = PLAYER_AMOUNT / teamAmount;
-        Player[] out = new Player[PLAYER_AMOUNT];
-        for (int player = 0; player < playersInTeam; player++) {
+        for (int playerIndex = 0; playerIndex < playersPerTeam; playerIndex++) {
             for (int teamIndex = 0; teamIndex < teamAmount; teamIndex++) {
-                out[current] = new Player(teamIndex);
-                current++;
+                playerArray[current++] = new Player(teamIndex); // Removed redundant "current++" logic
             }
         }
-
-        return out;
     }
 
     private void initPlayerHands() {
-        int BONES_PER_PLAYER = 28 / players.length;
+        int TOTAL_BONES = 28;
+        int bonesPerPlayer = TOTAL_BONES / players.length;
         BoneList boneyard = new BoneList();
         boneyard.fill();
         for (Player player : players) {
-            player.setHand(boneyard.takeRandom(BONES_PER_PLAYER));
+            player.setHand(boneyard.takeRandom(bonesPerPlayer));
         }
     }
 
